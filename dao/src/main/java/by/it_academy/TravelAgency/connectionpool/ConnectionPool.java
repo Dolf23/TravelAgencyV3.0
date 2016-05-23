@@ -2,26 +2,27 @@ package by.it_academy.TravelAgency.connectionpool;
 
 import by.it_academy.TravelAgency.constants.DBConfig;
 import by.it_academy.TravelAgency.logger.logger;
+import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+
 
 public enum ConnectionPool {
     INSTANCE;
 
-    private DataSource dataSource;
+    private BasicDataSource dataSource;
     private Connection connection;
 
     {
-        try {
-            InitialContext initialContext = new InitialContext();
-            dataSource = (DataSource) initialContext.lookup(DBConfig.DATABASE_SOURCE);
-        } catch (NamingException e) {
-            logger.writeLog(e.getMessage());
-        }
+        ResourceBundle bundle = ResourceBundle.getBundle(DBConfig.DATABASE);
+        dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(bundle.getString(DBConfig.DATABASE_DRIVER));
+        dataSource.setUsername(bundle.getString(DBConfig.DATABASE_USER));
+        dataSource.setPassword(bundle.getString(DBConfig.DATABASE_PASSWORD));
+        dataSource.setUrl(bundle.getString(DBConfig.DATABASE_URL));
+
     }
 
     public Connection getConnection() throws SQLException {

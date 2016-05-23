@@ -1,7 +1,6 @@
 package by.it_academy.TravelAgency.constants;
 
 public class ConfigsConstants {
-    public static final String DATABASE_SOURCE = "java:/comp/env/jdbc/travel_agency";
     public static final String CONFIG_SOURCE = "configs";
     public static final String MESSAGES_SOURCE = "messages";
 
