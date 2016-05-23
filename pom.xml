@@ -7,6 +7,9 @@
     <groupId>by.it_academy.TravelAgency</groupId>
     <artifactId>TravelAgency</artifactId>
     <version>1.0</version>
+    <modules>
+        <module>dto</module>
+    </modules>
     <packaging>pom</packaging>
 
     <dependencyManagement>
