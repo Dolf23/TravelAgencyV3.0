@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form class="form-horizontal" method="POST" action="/controller" style="margin-top: 15px">
+<form class="form-horizontal" method="POST" action="controller" style="margin-top: 15px">
     <input type="hidden" name="command" value="registration">
     <fieldset>
 

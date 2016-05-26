@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="top.jsp" %>
 
-<form class="form-horizontal" action="/controller" method="post">
+<form class="form-horizontal" action="controller" method="post">
     <input type="hidden" name="command" value="set_discount">
     <fieldset>
 
