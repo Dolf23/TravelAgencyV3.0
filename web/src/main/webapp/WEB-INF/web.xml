@@ -28,15 +28,6 @@
     </filter-mapping>
 
     <filter>
-        <filter-name>EntityLists</filter-name>
-        <filter-class>by.it_academy.TravelAgency.filters.ListsEntityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>EntityLists</filter-name>
-        <servlet-name>Controller</servlet-name>
-    </filter-mapping>
-
-    <filter>
         <filter-name>Security</filter-name>
         <filter-class>by.it_academy.TravelAgency.filters.SecurityFilter</filter-class>
     </filter>
