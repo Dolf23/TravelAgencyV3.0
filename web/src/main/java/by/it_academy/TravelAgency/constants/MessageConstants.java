@@ -12,5 +12,6 @@ public class MessageConstants {
     public static final String ERROR_DATABASE = "message.databaseerror";
     public static final String ERROR_TOURS_LIST = "message.emptytourslist";
     public static final String RESERVE_TOUR = "message.reservtour";
-    public static final String CANCEL_RESERVING = "messsage.cancelreserving";
+    public static final String CANCEL_RESERVING = "message.cancelreserving";
+    public static final String LOGIN = "message.login";
 }

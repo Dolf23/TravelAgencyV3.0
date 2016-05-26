@@ -36,6 +36,15 @@
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
+    <filter>
+        <filter-name>Security</filter-name>
+        <filter-class>by.it_academy.TravelAgency.filters.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Security</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
