@@ -1,14 +1,14 @@
 package by.it_academy.TravelAgency.commands.guest;
 
+import by.it_academy.TravelAgency.commands.Command;
 import by.it_academy.TravelAgency.constants.ConfigsConstants;
 import by.it_academy.TravelAgency.constants.MessageConstants;
 import by.it_academy.TravelAgency.constants.Parameters;
-import by.it_academy.TravelAgency.commands.Command;
-import by.it_academy.TravelAgency.dao.UserDAO;
 import by.it_academy.TravelAgency.dto.User;
 import by.it_academy.TravelAgency.logger.logger;
 import by.it_academy.TravelAgency.managers.ConfigurationManager;
 import by.it_academy.TravelAgency.managers.MessageManager;
+import by.it_academy.TravelAgency.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,10 +22,10 @@ public class LoginCommand implements Command {
         String page = null;
 
         try {
-            if (UserDAO.INSTANCE.isAuthorized(login, password)) {
+            if (UserService.isAuthorized(login, password)) {
                 HttpSession session = request.getSession();
-                User user = UserDAO.INSTANCE.getUserByLogin(login);
-                String role = UserDAO.INSTANCE.checkRole(login);
+                User user = UserService.getUserByLogin(login);
+                String role = UserService.checkRole(login);
                 session.setAttribute(Parameters.USER_ROLE, role);
                 session.setAttribute(Parameters.USER, user);
                 if (role.equals(Parameters.ADMIN))

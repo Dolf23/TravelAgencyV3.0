@@ -4,13 +4,13 @@ import by.it_academy.TravelAgency.commands.AbstractCommand;
 import by.it_academy.TravelAgency.constants.ConfigsConstants;
 import by.it_academy.TravelAgency.constants.MessageConstants;
 import by.it_academy.TravelAgency.constants.Parameters;
-import by.it_academy.TravelAgency.dao.CountryDAO;
-import by.it_academy.TravelAgency.dao.TourDAO;
 import by.it_academy.TravelAgency.dto.Country;
 import by.it_academy.TravelAgency.dto.Tour;
 import by.it_academy.TravelAgency.logger.logger;
 import by.it_academy.TravelAgency.managers.ConfigurationManager;
 import by.it_academy.TravelAgency.managers.MessageManager;
+import by.it_academy.TravelAgency.services.CountryService;
+import by.it_academy.TravelAgency.services.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -58,12 +58,12 @@ public class CreateTourCommand extends AbstractCommand {
     }
 
     private int getIdCountry(String country) throws SQLException {
-        int id = CountryDAO.INSTANCE.getIdByCountry(country);
+        int id = CountryService.getIdByCountry(country);
         if (0 == id) {
             Country entity = new Country();
             entity.setCountry(country);
-            CountryDAO.INSTANCE.createEntity(entity);
-            id = CountryDAO.INSTANCE.getIdByCountry(country);
+            new CountryService().add(entity);
+            id = CountryService.getIdByCountry(country);
         }
         return id;
     }
@@ -77,7 +77,7 @@ public class CreateTourCommand extends AbstractCommand {
         tour.setFk_food_complex(fk_food_complex);
         tour.setCost(cost);
         tour.setDiscount(discount);
-        TourDAO.INSTANCE.createEntity(tour);
+        new TourService().add(tour);
     }
 
 }

@@ -4,11 +4,11 @@ import by.it_academy.TravelAgency.commands.AbstractCommand;
 import by.it_academy.TravelAgency.constants.ConfigsConstants;
 import by.it_academy.TravelAgency.constants.MessageConstants;
 import by.it_academy.TravelAgency.constants.Parameters;
-import by.it_academy.TravelAgency.dao.ActionDAO;
 import by.it_academy.TravelAgency.dto.User;
 import by.it_academy.TravelAgency.logger.logger;
 import by.it_academy.TravelAgency.managers.ConfigurationManager;
 import by.it_academy.TravelAgency.managers.MessageManager;
+import by.it_academy.TravelAgency.services.ActionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,7 +26,7 @@ public class CancelReservationCommand extends AbstractCommand {
                 User user = (User) session.getAttribute(Parameters.USER);
 
                 int idTour = Integer.parseInt(idTourString);
-                ActionDAO.INSTANCE.deleteAction(user, idTour);
+                ActionService.deleteAction(user, idTour);
 
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.USER_PAGE_PATH);
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.CANCEL_RESERVING));

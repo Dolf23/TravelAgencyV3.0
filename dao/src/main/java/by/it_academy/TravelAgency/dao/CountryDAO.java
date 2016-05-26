@@ -57,19 +57,4 @@ public enum CountryDAO implements DAO<Country> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return country;
     }
-
-    public int getIdByCountry(String country) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ID_BY_COUNTRY);
-        statement.setString(1, country);
-        ResultSet resultSet = statement.executeQuery();
-
-        int id;
-        if (resultSet.next())
-            id = resultSet.getInt(COUNTRIES_ID);
-        else
-            id = 0;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return id;
-    }
 }

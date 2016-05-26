@@ -53,19 +53,4 @@ public enum FoodComplexDAO implements DAO<FoodComplex> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return foodComplex;
     }
-
-    public int getIdByFoodComplex(String foodComplex) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ID_BY_FOOD_COMPLEX);
-        statement.setString(1, foodComplex);
-        ResultSet resultSet = statement.executeQuery();
-
-        int id;
-        if (resultSet.next())
-            id = resultSet.getInt(FOOD_COMPLEXES_ID);
-        else
-            id = 0;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return id;
-    }
 }

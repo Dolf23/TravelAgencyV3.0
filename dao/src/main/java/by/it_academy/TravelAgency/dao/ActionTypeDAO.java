@@ -50,19 +50,4 @@ public enum ActionTypeDAO implements DAO<ActionType> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return actionType;
     }
-
-    public int getIdByActionType(String actionType) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ID_BY_ACTION_TYPE);
-        statement.setString(1, actionType);
-        ResultSet resultSet = statement.executeQuery();
-
-        int id;
-        if (resultSet.next())
-            id = resultSet.getInt(ColumnNames.ACTION_TYPES_ID);
-        else
-            id = 0;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return id;
-    }
 }

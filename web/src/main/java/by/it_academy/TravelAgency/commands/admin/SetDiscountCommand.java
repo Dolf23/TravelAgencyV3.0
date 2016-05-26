@@ -4,11 +4,10 @@ import by.it_academy.TravelAgency.commands.AbstractCommand;
 import by.it_academy.TravelAgency.constants.ConfigsConstants;
 import by.it_academy.TravelAgency.constants.MessageConstants;
 import by.it_academy.TravelAgency.constants.Parameters;
-import by.it_academy.TravelAgency.dao.TourDAO;
-import by.it_academy.TravelAgency.dto.Tour;
 import by.it_academy.TravelAgency.logger.logger;
 import by.it_academy.TravelAgency.managers.ConfigurationManager;
 import by.it_academy.TravelAgency.managers.MessageManager;
+import by.it_academy.TravelAgency.services.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -26,7 +25,7 @@ public class SetDiscountCommand extends AbstractCommand {
             if (isFieldsFull()) {
                 int idTour = Integer.parseInt(idTourString);
                 int amountDiscount = Integer.parseInt(amountDiscountString);
-                makeDiscount(idTour, amountDiscount);
+                TourService.makeDiscount(idTour, amountDiscount);
 
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ADMIN_PAGE_PATH);
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.SUCCESS_OPERATION));
@@ -47,11 +46,5 @@ public class SetDiscountCommand extends AbstractCommand {
         if (null != amountDiscountString && null != idTourString)
             is = true;
         return is;
-    }
-
-    private void makeDiscount(int idTour, int amountDiscount) throws SQLException {
-        Tour tour = TourDAO.INSTANCE.getEntityByID(idTour);
-        tour.setDiscount(amountDiscount);
-        TourDAO.INSTANCE.setDiscountById(tour);
     }
 }

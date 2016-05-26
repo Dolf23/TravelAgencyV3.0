@@ -53,18 +53,4 @@ public enum RoleDAO implements DAO<Role> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return role;
     }
-
-    public int getIdByRole(String role) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ROLE_ID_BY_ROLE);
-        statement.setString(1, role);
-        ResultSet resultSet = statement.executeQuery();
-
-        int out = 0;
-        while (resultSet.next()) {
-            out = resultSet.getInt(ROLES_ID);
-        }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return out;
-    }
 }

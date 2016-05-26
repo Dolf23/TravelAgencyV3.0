@@ -52,19 +52,4 @@ public enum HotelTypeDAO implements DAO<HotelType> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return hotelType;
     }
-
-    public int getIdByHotelType(String hotelType) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ID_BY_HOTEL);
-        statement.setString(1, hotelType);
-        ResultSet resultSet = statement.executeQuery();
-
-        int id;
-        if (resultSet.next())
-            id = resultSet.getInt(HOTEL_TYPES_ID);
-        else
-            id = 0;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return id;
-    }
 }

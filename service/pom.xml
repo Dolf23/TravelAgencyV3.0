@@ -9,22 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>by.it_academy.TravelAgency</groupId>
-    <artifactId>web</artifactId>
+    <artifactId>service</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
         <dependency>
             <groupId>by.it_academy.TravelAgency</groupId>
             <artifactId>dto</artifactId>
@@ -32,8 +21,12 @@
         </dependency>
         <dependency>
             <groupId>by.it_academy.TravelAgency</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>dao</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
 

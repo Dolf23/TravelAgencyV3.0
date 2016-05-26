@@ -53,19 +53,4 @@ public enum TourTypeDAO implements DAO<TourType> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return tourType;
     }
-
-    public int getIdByTourType(String tourType) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ID_BY_TOUR_TYPE);
-        statement.setString(1, tourType);
-        ResultSet resultSet = statement.executeQuery();
-
-        int id;
-        if (resultSet.next())
-            id = resultSet.getInt(TOUR_TYPES_ID);
-        else
-            id = 0;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return id;
-    }
 }

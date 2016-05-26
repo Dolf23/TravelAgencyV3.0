@@ -52,19 +52,4 @@ public enum TransportDAO implements DAO<Transport> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return transport;
     }
-
-    public int getIdByTransport(String transport) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ID_BY_TRANSPORT);
-        statement.setString(1, transport);
-        ResultSet resultSet = statement.executeQuery();
-
-        int id;
-        if (resultSet.next())
-            id = resultSet.getInt(TRANSPORTS_ID);
-        else
-            id = 0;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return id;
-    }
 }

@@ -1,15 +1,15 @@
 package by.it_academy.TravelAgency.commands.guest;
 
+import by.it_academy.TravelAgency.commands.AbstractCommand;
 import by.it_academy.TravelAgency.constants.ConfigsConstants;
 import by.it_academy.TravelAgency.constants.MessageConstants;
 import by.it_academy.TravelAgency.constants.Parameters;
-import by.it_academy.TravelAgency.commands.AbstractCommand;
-import by.it_academy.TravelAgency.dao.RoleDAO;
-import by.it_academy.TravelAgency.dao.UserDAO;
 import by.it_academy.TravelAgency.dto.User;
 import by.it_academy.TravelAgency.logger.logger;
 import by.it_academy.TravelAgency.managers.ConfigurationManager;
 import by.it_academy.TravelAgency.managers.MessageManager;
+import by.it_academy.TravelAgency.services.RoleService;
+import by.it_academy.TravelAgency.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -34,12 +34,12 @@ public class RegistrationCommand extends AbstractCommand {
         int fkRole;
         try {
             if (null != request.getParameter(ROLE))
-                fkRole = RoleDAO.INSTANCE.getIdByRole(ADMIN);
+                fkRole = RoleService.getIdByRole(ADMIN);
             else
-                fkRole = RoleDAO.INSTANCE.getIdByRole(USER);
+                fkRole = RoleService.getIdByRole(USER);
 
             if (areFieldsFull()) {
-                if (UserDAO.INSTANCE.isNewUser(login)) {
+                if (UserService.isNewUser(login)) {
                     registration(fkRole);
                     page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.INDEX_PAGE_PATH);
                     request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.SUCCESS_REGISTRATION));
@@ -81,7 +81,7 @@ public class RegistrationCommand extends AbstractCommand {
         user.setLogin(login);
         user.setPassword(password);
         user.setFk_Role(fkrole);
-        UserDAO.INSTANCE.createEntity(user);
+        new UserService().add(user);
     }
 
 }

@@ -4,15 +4,15 @@ import by.it_academy.TravelAgency.commands.AbstractCommand;
 import by.it_academy.TravelAgency.constants.ConfigsConstants;
 import by.it_academy.TravelAgency.constants.MessageConstants;
 import by.it_academy.TravelAgency.constants.Parameters;
-import by.it_academy.TravelAgency.dao.ActionDAO;
-import by.it_academy.TravelAgency.dao.ActionTypeDAO;
-import by.it_academy.TravelAgency.dao.TourDAO;
 import by.it_academy.TravelAgency.dto.Action;
 import by.it_academy.TravelAgency.dto.Tour;
 import by.it_academy.TravelAgency.dto.User;
 import by.it_academy.TravelAgency.logger.logger;
 import by.it_academy.TravelAgency.managers.ConfigurationManager;
 import by.it_academy.TravelAgency.managers.MessageManager;
+import by.it_academy.TravelAgency.services.ActionService;
+import by.it_academy.TravelAgency.services.ActionTypeService;
+import by.it_academy.TravelAgency.services.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,7 +27,8 @@ public class ReserveCommand extends AbstractCommand {
 
             if (null != idTourString) {
                 int idTour = Integer.parseInt(idTourString);
-                Tour tour = TourDAO.INSTANCE.getEntityByID(idTour);
+                TourService tourService = new TourService();
+                Tour tour = tourService.getById(idTour);
 
                 HttpSession session = request.getSession();
                 User user = (User) session.getAttribute(Parameters.USER);
@@ -56,7 +57,7 @@ public class ReserveCommand extends AbstractCommand {
 
         action.setFk_tour(tour.getId());
         action.setFk_user(user.getId());
-        action.setFk_action(ActionTypeDAO.INSTANCE.getIdByActionType(actionType));
-        ActionDAO.INSTANCE.createEntity(action);
+        action.setFk_action(ActionTypeService.getIdByActionType(actionType));
+        new ActionService().add(action);
     }
 }

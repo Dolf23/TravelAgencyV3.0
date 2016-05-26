@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static by.it_academy.TravelAgency.constants.ColumnNames.*;
 
@@ -78,54 +76,12 @@ public enum TourDAO implements DAO<Tour> {
         return tour;
     }
 
-    public void setDiscountById(Tour tour) throws SQLException {
+    public void updateEntity(Tour tour) throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SQLRequests.UPDATE_TOUR_SET_DISCOUNT);
         statement.setInt(1, tour.getDiscount());
         statement.setInt(2, tour.getId());
         statement.executeUpdate();
         ConnectionPool.INSTANCE.releaseConnection(connection);
-    }
-
-    public Map<Integer, String> getMapToursByRequest(int tourType, int country, int transport, int hotelType, int foodComplex) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_TOURS_BY_REQUEST);
-        statement.setInt(1, tourType);
-        statement.setInt(2, country);
-        statement.setInt(3, transport);
-        statement.setInt(4, hotelType);
-        statement.setInt(5, foodComplex);
-        ResultSet resultSet = statement.executeQuery();
-        Map<Integer, String> map = new HashMap<>();
-
-        while (resultSet.next()) {
-            int id = resultSet.getInt(TOURS_ID);
-            map.put(id, convertTourToString(id));
-        }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return map;
-    }
-
-    public String convertTourToString(int id) throws SQLException {
-        Tour tour = TourDAO.INSTANCE.getEntityByID(id);
-        String tourString =
-                TourTypeDAO.INSTANCE.getEntityByID(tour.getFk_tour_type()).getTourType() + " " +
-                        CountryDAO.INSTANCE.getEntityByID(tour.getFk_country()).getCountry() + " " +
-                        TransportDAO.INSTANCE.getEntityByID(tour.getFk_transport()).getTransport() + " " +
-                        HotelTypeDAO.INSTANCE.getEntityByID(tour.getFk_hotel_type()).getHotelType() + " " +
-                        FoodComplexDAO.INSTANCE.getEntityByID(tour.getFk_food_complex()).getFoodComplex() + " " +
-                        tour.getCost() + " " + tour.getDiscount();
-        return tourString;
-    }
-
-    public Map<Integer, String> getAllToursMap() throws SQLException {
-        List<Tour> list = getAll();
-        Map<Integer, String> map = new HashMap<>();
-
-        for (Tour tour : list) {
-            int idTour = tour.getId();
-            map.put(idTour, convertTourToString(idTour));
-        }
-        return map;
     }
 }
