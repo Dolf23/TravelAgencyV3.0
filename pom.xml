@@ -8,7 +8,7 @@
     <artifactId>TravelAgency</artifactId>
     <version>1.0</version>
     <modules>
-        <module>dto</module>
+        <module>entity</module>
         <module>dao</module>
         <module>web</module>
         <module>service</module>
@@ -54,6 +54,17 @@
                 <version>2.1.1</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>4.3.5.Final</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
