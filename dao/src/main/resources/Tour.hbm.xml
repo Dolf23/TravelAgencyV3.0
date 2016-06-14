@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="by.it_academy.agency.beans">
+    <class name="Tour">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="cost"/>
+        <property name="discount"/>
+
+        <many-to-one name="country" class="Country"/>
+        <many-to-one name="tourType" class="TourType"/>
+        <many-to-one name="transport" class="Transport"/>
+        <many-to-one name="hotelType" class="HotelType"/>
+        <many-to-one name="foodComplex" class="HotelType"/>
+    </class>
+</hibernate-mapping>

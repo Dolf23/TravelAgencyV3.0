@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="by.it_academy.agency.beans">
+    <class name="Transport">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+
+        <property name="transport"/>
+
+        <set name="tours" table="tours" inverse="true" lazy="true" fetch="select">
+            <key column="transport_id" not-null="true"></key>
+            <one-to-many class="Tour"/>
+        </set>
+    </class>
+</hibernate-mapping>

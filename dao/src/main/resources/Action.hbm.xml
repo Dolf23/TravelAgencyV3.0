@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="by.it_academy.agency.beans">
+    <class name="Action">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+
+        <many-to-one name="actionType" class="ActionType"/>
+        <many-to-one name="user" class="User"/>
+        <many-to-one name="tour" class="Tour"/>
+    </class>
+</hibernate-mapping>
