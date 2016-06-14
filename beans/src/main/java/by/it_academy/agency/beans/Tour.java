@@ -2,13 +2,15 @@ package by.it_academy.agency.beans;
 
 public class Tour extends Entity {
     private int id;
+    private int cost;
+    private int discount;
+
     private Country country;
     private TourType tourType;
     private Transport transport;
     private HotelType hotelType;
     private FoodComplex foodComplex;
-    private int cost;
-    private int discount;
+
 
     @Override
     public int hashCode() {

@@ -2,6 +2,7 @@ package by.it_academy.agency.beans;
 
 public class Action extends Entity {
     private int id;
+
     private ActionType actionType;
     private User user;
     private Tour tour;

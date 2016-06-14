@@ -7,6 +7,7 @@ public class User extends Entity {
     private String email;
     private String login;
     private String password;
+
     private Role role;
 
     @Override
