@@ -1,60 +1,30 @@
 package by.it_academy.agency.dao;
 
-import by.it_academy.agency.connectionpool.ConnectionPool;
+import by.it_academy.agency.beans.Country;
 import by.it_academy.agency.constants.SQLRequests;
-import by.it_academy.TravelAgency.dto.Country;
+import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Session;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static by.it_academy.agency.constants.ColumnNames.COUNTRIES_COUNTRY;
-import static by.it_academy.agency.constants.ColumnNames.COUNTRIES_ID;
 
 public enum CountryDAO implements DAO<Country> {
     INSTANCE;
 
     @Override
-    public List<Country> getAll() throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ALL_COUNTRIES);
-        ResultSet resultSet = statement.executeQuery();
-        List<Country> list = new ArrayList<>();
-        while (resultSet.next()) {
-            Country country = new Country();
-            country.setId(resultSet.getInt(COUNTRIES_ID));
-            country.setCountry(resultSet.getString(COUNTRIES_COUNTRY));
-            list.add(country);
-        }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return list;
+    public List<Country> getAll() {
+        Session session = HibernateUtil.getSession();
+        return session.createQuery(SQLRequests.GET_ALL_COUNTRIES).list();
     }
 
     @Override
-    public void createEntity(Country country) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.ADD_COUNTRY);
-        statement.setString(1, country.getCountry());
-        statement.executeUpdate();
-        ConnectionPool.INSTANCE.releaseConnection(connection);
+    public void createEntity(Country country) {
+        Session session = HibernateUtil.getSession();
+        session.save(country);
     }
 
     @Override
-    public Country getEntityByID(int id) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_COUNTRY_BY_ID);
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-
-        Country country = new Country();
-        while (resultSet.next()) {
-            country.setId(resultSet.getInt(COUNTRIES_ID));
-            country.setCountry(resultSet.getString(COUNTRIES_COUNTRY));
-        }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return country;
+    public Country getEntityByID(int id) {
+        Session session = HibernateUtil.getSession();
+        return (Country) session.get(Country.class, id);
     }
 }

@@ -1,14 +1,14 @@
 package by.it_academy.agency.dao;
 
-import by.it_academy.TravelAgency.dto.Entity;
 
-import java.sql.SQLException;
+import by.it_academy.agency.beans.Entity;
+
 import java.util.List;
 
 public interface DAO<TYPE extends Entity> {
-    List<TYPE> getAll() throws SQLException;
+    List<TYPE> getAll();
 
-    public void createEntity(TYPE type) throws SQLException;
+    void createEntity(TYPE type);
 
-    public TYPE getEntityByID(int id) throws SQLException;
+    TYPE getEntityByID(int id);
 }
