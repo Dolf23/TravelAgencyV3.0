@@ -23,7 +23,7 @@ public class ActionTypeServiceTest extends TestCase {
     @Test
     public void testGetByIdShouldReturnActionType() throws Exception {
         ActionTypeDAO dao = spy(ActionTypeDAO.INSTANCE);
-        by.it_academy.agency.dto.ActionType actionType = new by.it_academy.agency.dto.ActionType();
+        by.it_academy.agency.beans.ActionType actionType = new by.it_academy.agency.beans.ActionType();
         when(dao.getEntityByID(id)).thenReturn(actionType);
         actionTypeService.getById(id);
         verify(dao).getEntityByID(id);

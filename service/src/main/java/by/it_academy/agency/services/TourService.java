@@ -3,7 +3,7 @@ package by.it_academy.agency.services;
 import by.it_academy.agency.connectionpool.ConnectionPool;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.*;
-import by.it_academy.agency.dto.Tour;
+import by.it_academy.agency.beans.Tour;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

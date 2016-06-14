@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>by.it_academy.TravelAgency</groupId>
-            <artifactId>dto</artifactId>
+            <artifactId>entity</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

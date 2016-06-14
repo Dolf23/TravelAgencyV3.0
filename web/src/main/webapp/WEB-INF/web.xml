@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>by.it_academy.TravelAgency.controller.Controller</servlet-class>
+        <servlet-class>by.it_academy.agency.controller.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
@@ -20,7 +20,7 @@
 
     <filter>
         <filter-name>Encoding</filter-name>
-        <filter-class>by.it_academy.TravelAgency.filters.EncodingFilter</filter-class>
+        <filter-class>by.it_academy.agency.filters.EncodingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Encoding</filter-name>
@@ -29,7 +29,7 @@
 
     <filter>
         <filter-name>Security</filter-name>
-        <filter-class>by.it_academy.TravelAgency.filters.SecurityFilter</filter-class>
+        <filter-class>by.it_academy.agency.filters.SecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Security</filter-name>

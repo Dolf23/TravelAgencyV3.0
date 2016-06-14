@@ -4,7 +4,7 @@ import by.it_academy.agency.commands.Command;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
 import by.it_academy.agency.constants.Parameters;
-import by.it_academy.agency.dto.User;
+import by.it_academy.agency.beans.User;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;

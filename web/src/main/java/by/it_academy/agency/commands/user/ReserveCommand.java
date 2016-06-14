@@ -25,10 +25,10 @@ public class ReserveCommand extends AbstractCommand {
             if (null != idTourString) {
                 int idTour = Integer.parseInt(idTourString);
                 TourService tourService = new TourService();
-                by.it_academy.agency.dto.Tour tour = tourService.getById(idTour);
+                by.it_academy.agency.beans.Tour tour = tourService.getById(idTour);
 
                 HttpSession session = request.getSession();
-                by.it_academy.agency.dto.User user = (by.it_academy.agency.dto.User) session.getAttribute(Parameters.USER);
+                by.it_academy.agency.beans.User user = (by.it_academy.agency.beans.User) session.getAttribute(Parameters.USER);
 
                 String actionType = request.getParameter(Parameters.COMMAND);
 
@@ -49,8 +49,8 @@ public class ReserveCommand extends AbstractCommand {
         return page;
     }
 
-    private void reserveTour(by.it_academy.agency.dto.Tour tour, by.it_academy.agency.dto.User user, String actionType) throws SQLException {
-        by.it_academy.agency.dto.Action action = new by.it_academy.agency.dto.Action();
+    private void reserveTour(by.it_academy.agency.beans.Tour tour, by.it_academy.agency.beans.User user, String actionType) throws SQLException {
+        by.it_academy.agency.beans.Action action = new by.it_academy.agency.beans.Action();
 
         action.setFk_tour(tour.getId());
         action.setFk_user(user.getId());

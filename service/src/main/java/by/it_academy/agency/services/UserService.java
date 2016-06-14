@@ -4,7 +4,7 @@ import by.it_academy.agency.connectionpool.ConnectionPool;
 import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.UserDAO;
-import by.it_academy.agency.dto.User;
+import by.it_academy.agency.beans.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

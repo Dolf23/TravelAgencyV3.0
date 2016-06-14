@@ -1,4 +1,4 @@
-package by.it_academy.agency.dto;
+package by.it_academy.agency.beans;
 
 import java.io.Serializable;
 

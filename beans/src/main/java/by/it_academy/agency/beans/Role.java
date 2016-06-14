@@ -1,8 +1,12 @@
-package by.it_academy.agency.dto;
+package by.it_academy.agency.beans;
+
+import java.util.Set;
 
 public class Role extends Entity {
     private int id;
     private String role;
+
+    private Set<User> users;
 
     @Override
     public int hashCode() {
@@ -60,5 +64,13 @@ public class Role extends Entity {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

@@ -1,8 +1,12 @@
-package by.it_academy.agency.dto;
+package by.it_academy.agency.beans;
+
+import java.util.Set;
 
 public class Country extends Entity {
     private int id;
     private String country;
+
+    private Set<Tour> tours;
 
     @Override
     public int hashCode() {
@@ -59,5 +63,13 @@ public class Country extends Entity {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Set<Tour> getTours() {
+        return tours;
+    }
+
+    public void setTours(Set<Tour> tours) {
+        this.tours = tours;
     }
 }

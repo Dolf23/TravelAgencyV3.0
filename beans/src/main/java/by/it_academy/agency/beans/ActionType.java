@@ -1,8 +1,12 @@
-package by.it_academy.agency.dto;
+package by.it_academy.agency.beans;
+
+import java.util.Set;
 
 public class ActionType extends Entity{
     private int id;
     private String actionType;
+
+    private Set<Tour> tours;
 
     @Override
     public int hashCode() {
@@ -59,5 +63,13 @@ public class ActionType extends Entity{
 
     public void setActionType(String actionType) {
         this.actionType = actionType;
+    }
+
+    public Set<Tour> getTours() {
+        return tours;
+    }
+
+    public void setTours(Set<Tour> tours) {
+        this.tours = tours;
     }
 }

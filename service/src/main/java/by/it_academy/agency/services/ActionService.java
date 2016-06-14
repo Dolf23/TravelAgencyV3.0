@@ -4,7 +4,7 @@ import by.it_academy.agency.connectionpool.ConnectionPool;
 import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.ActionDAO;
-import by.it_academy.agency.dto.User;
+import by.it_academy.agency.beans.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,23 +14,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ActionService implements IService<by.it_academy.agency.dto.Action> {
+public class ActionService implements IService<by.it_academy.agency.beans.Action> {
     @Override
-    public void add(by.it_academy.agency.dto.Action action) throws SQLException {
+    public void add(by.it_academy.agency.beans.Action action) throws SQLException {
         ActionDAO.INSTANCE.createEntity(action);
     }
 
     @Override
-    public void update(by.it_academy.agency.dto.Action action) throws SQLException {
+    public void update(by.it_academy.agency.beans.Action action) throws SQLException {
     }
 
     @Override
-    public by.it_academy.agency.dto.Action getById(int id) throws SQLException {
+    public by.it_academy.agency.beans.Action getById(int id) throws SQLException {
         return ActionDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<by.it_academy.agency.dto.Action> getAll() throws SQLException {
+    public List<by.it_academy.agency.beans.Action> getAll() throws SQLException {
         return ActionDAO.INSTANCE.getAll();
     }
 

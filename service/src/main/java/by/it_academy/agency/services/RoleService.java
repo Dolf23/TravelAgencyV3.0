@@ -11,24 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RoleService implements IService<by.it_academy.agency.dto.Role> {
+public class RoleService implements IService<by.it_academy.agency.beans.Role> {
     @Override
-    public void add(by.it_academy.agency.dto.Role role) throws SQLException {
+    public void add(by.it_academy.agency.beans.Role role) throws SQLException {
 
     }
 
     @Override
-    public void update(by.it_academy.agency.dto.Role role) throws SQLException {
+    public void update(by.it_academy.agency.beans.Role role) throws SQLException {
 
     }
 
     @Override
-    public by.it_academy.agency.dto.Role getById(int id) throws SQLException {
+    public by.it_academy.agency.beans.Role getById(int id) throws SQLException {
         return RoleDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<by.it_academy.agency.dto.Role> getAll() throws SQLException {
+    public List<by.it_academy.agency.beans.Role> getAll() throws SQLException {
         return RoleDAO.INSTANCE.getAll();
     }
 

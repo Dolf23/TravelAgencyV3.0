@@ -1,21 +1,19 @@
-package by.it_academy.agency.dto;
+package by.it_academy.agency.beans;
 
 public class User extends Entity {
-    private static final long serialVersionUID = 1L;
-
     private int id;
     private String name;
     private String surname;
     private String email;
     private String login;
     private String password;
-    private int fk_Role;
+    private Role role;
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + fk_Role;
+        result = prime * result + role.hashCode();
         result = prime * result + id;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((surname == null) ? 0 : surname.hashCode());
@@ -38,7 +36,7 @@ public class User extends Entity {
 
         User other = (User) obj;
 
-        if (fk_Role != other.fk_Role)
+        if (!other.role.equals(role))
             return false;
 
         if (id != other.id)
@@ -92,7 +90,7 @@ public class User extends Entity {
                     ", email='" + email + '\'' +
                     ", login='" + login + '\'' +
                     ", password='" + password + '\'' +
-                    ", role=" + fk_Role +
+                ", role=" + role +
                     ']';
 
         return outString;
@@ -148,11 +146,11 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public int getFk_Role() {
-        return fk_Role;
+    public Role getRole() {
+        return role;
     }
 
-    public void setFk_Role(int fk_Role) {
-        this.fk_Role = fk_Role;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

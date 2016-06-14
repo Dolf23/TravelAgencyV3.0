@@ -58,7 +58,7 @@ public class CreateTourCommand extends AbstractCommand {
     private int getIdCountry(String country) throws SQLException {
         int id = CountryService.getIdByCountry(country);
         if (0 == id) {
-            by.it_academy.agency.dto.Country entity = new by.it_academy.agency.dto.Country();
+            by.it_academy.agency.beans.Country entity = new by.it_academy.agency.beans.Country();
             entity.setCountry(country);
             new CountryService().add(entity);
             id = CountryService.getIdByCountry(country);
@@ -67,7 +67,7 @@ public class CreateTourCommand extends AbstractCommand {
     }
 
     private void createTour() throws SQLException {
-        by.it_academy.agency.dto.Tour tour = new by.it_academy.agency.dto.Tour();
+        by.it_academy.agency.beans.Tour tour = new by.it_academy.agency.beans.Tour();
         tour.setFk_country(fk_country);
         tour.setFk_tour_type(fk_tour_type);
         tour.setFk_transport(fk_transport);

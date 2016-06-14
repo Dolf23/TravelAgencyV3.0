@@ -21,19 +21,19 @@ public class GoToCreateTourCommand extends AbstractCommand {
 
         try {
             TourTypeService tourTypeService = new TourTypeService();
-            List<by.it_academy.agency.dto.TourType> typeTourList = tourTypeService.getAll();
+            List<by.it_academy.agency.beans.TourType> typeTourList = tourTypeService.getAll();
             request.setAttribute(Parameters.TOUR_TYPE_LIST, typeTourList);
 
             TransportService transportService = new TransportService();
-            List<by.it_academy.agency.dto.Transport> transportList = transportService.getAll();
+            List<by.it_academy.agency.beans.Transport> transportList = transportService.getAll();
             request.setAttribute(Parameters.TRANSPORT_LIST, transportList);
 
             HotelTypeService hotelTypeService = new HotelTypeService();
-            List<by.it_academy.agency.dto.HotelType> hotelList = hotelTypeService.getAll();
+            List<by.it_academy.agency.beans.HotelType> hotelList = hotelTypeService.getAll();
             request.setAttribute(Parameters.HOTEL_TYPE_LIST, hotelList);
 
             FoodComplexService foodComplexService = new FoodComplexService();
-            List<by.it_academy.agency.dto.FoodComplex> foodComplexList = foodComplexService.getAll();
+            List<by.it_academy.agency.beans.FoodComplex> foodComplexList = foodComplexService.getAll();
             request.setAttribute(Parameters.FOOD_COMPLEX_LIST, foodComplexList);
         } catch (SQLException e) {
             logger.writeLog(e.getMessage());

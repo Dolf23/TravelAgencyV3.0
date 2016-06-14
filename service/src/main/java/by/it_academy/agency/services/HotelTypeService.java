@@ -11,24 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class HotelTypeService implements IService<by.it_academy.agency.dto.HotelType> {
+public class HotelTypeService implements IService<by.it_academy.agency.beans.HotelType> {
     @Override
-    public void add(by.it_academy.agency.dto.HotelType hotelType) throws SQLException {
+    public void add(by.it_academy.agency.beans.HotelType hotelType) throws SQLException {
 
     }
 
     @Override
-    public void update(by.it_academy.agency.dto.HotelType hotelType) throws SQLException {
+    public void update(by.it_academy.agency.beans.HotelType hotelType) throws SQLException {
 
     }
 
     @Override
-    public by.it_academy.agency.dto.HotelType getById(int id) throws SQLException {
+    public by.it_academy.agency.beans.HotelType getById(int id) throws SQLException {
         return HotelTypeDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<by.it_academy.agency.dto.HotelType> getAll() throws SQLException {
+    public List<by.it_academy.agency.beans.HotelType> getAll() throws SQLException {
         return HotelTypeDAO.INSTANCE.getAll();
     }
 

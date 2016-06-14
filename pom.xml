@@ -8,7 +8,7 @@
     <artifactId>TravelAgency</artifactId>
     <version>1.0</version>
     <modules>
-        <module>entity</module>
+        <module>beans</module>
         <module>dao</module>
         <module>web</module>
         <module>service</module>

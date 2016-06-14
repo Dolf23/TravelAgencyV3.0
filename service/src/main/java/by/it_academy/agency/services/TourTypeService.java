@@ -12,24 +12,24 @@ import java.util.List;
 
 import static by.it_academy.agency.constants.ColumnNames.TOUR_TYPES_ID;
 
-public class TourTypeService implements IService<by.it_academy.agency.dto.TourType> {
+public class TourTypeService implements IService<by.it_academy.agency.beans.TourType> {
     @Override
-    public void add(by.it_academy.agency.dto.TourType tourType) throws SQLException {
+    public void add(by.it_academy.agency.beans.TourType tourType) throws SQLException {
 
     }
 
     @Override
-    public void update(by.it_academy.agency.dto.TourType tourType) throws SQLException {
+    public void update(by.it_academy.agency.beans.TourType tourType) throws SQLException {
 
     }
 
     @Override
-    public by.it_academy.agency.dto.TourType getById(int id) throws SQLException {
+    public by.it_academy.agency.beans.TourType getById(int id) throws SQLException {
         return TourTypeDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<by.it_academy.agency.dto.TourType> getAll() throws SQLException {
+    public List<by.it_academy.agency.beans.TourType> getAll() throws SQLException {
         return TourTypeDAO.INSTANCE.getAll();
     }
 

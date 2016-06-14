@@ -1,6 +1,6 @@
 package by.it_academy.agency.services;
 
-import by.it_academy.agency.dto.Entity;
+import by.it_academy.agency.beans.Entity;
 
 import java.sql.SQLException;
 import java.util.List;

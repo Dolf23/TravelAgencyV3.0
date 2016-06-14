@@ -3,7 +3,7 @@ package by.it_academy.agency.services;
 import by.it_academy.agency.connectionpool.ConnectionPool;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.CountryDAO;
-import by.it_academy.agency.dto.Country;
+import by.it_academy.agency.beans.Country;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
