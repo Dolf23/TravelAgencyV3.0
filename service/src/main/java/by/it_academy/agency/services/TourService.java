@@ -1,79 +1,99 @@
 package by.it_academy.agency.services;
 
-import by.it_academy.agency.connectionpool.ConnectionPool;
-import by.it_academy.agency.constants.SQLRequests;
-import by.it_academy.agency.dao.*;
 import by.it_academy.agency.beans.Tour;
+import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.constants.SQLRequests;
+import by.it_academy.agency.dao.TourDAO;
+import by.it_academy.agency.logger.logger;
+import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static by.it_academy.agency.constants.ColumnNames.TOURS_ID;
-
 public class TourService implements IService<Tour> {
     @Override
-    public void add(Tour tour) throws SQLException {
-        TourDAO.INSTANCE.createEntity(tour);
+    public void add(Tour tour) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSession();
+            session.beginTransaction();
+            TourDAO.INSTANCE.createEntity(tour);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            logger.writeLog(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            HibernateUtil.releaseSession(session);
+        }
     }
 
     @Override
-    public void update(Tour tour) throws SQLException {
-        TourDAO.INSTANCE.updateEntity(tour);
+    public void update(Tour tour) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSession();
+            session.beginTransaction();
+            TourDAO.INSTANCE.updateEntity(tour);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            logger.writeLog(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            HibernateUtil.releaseSession(session);
+        }
     }
 
     @Override
-    public Tour getById(int id) throws SQLException {
+    public Tour getById(int id) {
         return TourDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<Tour> getAll() throws SQLException {
+    public List<Tour> getAll() {
         return TourDAO.INSTANCE.getAll();
     }
 
-    public static void makeDiscount(int idTour, int amountDiscount) throws SQLException {
+    public static void makeDiscount(int idTour, int amountDiscount) {
         Tour tour = TourDAO.INSTANCE.getEntityByID(idTour);
         tour.setDiscount(amountDiscount);
         new TourService().update(tour);
     }
 
-    public static Map<Integer, String> getMapToursByRequest(int tourType, int country, int transport, int hotelType, int foodComplex) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_TOURS_BY_REQUEST);
-        statement.setInt(1, tourType);
-        statement.setInt(2, country);
-        statement.setInt(3, transport);
-        statement.setInt(4, hotelType);
-        statement.setInt(5, foodComplex);
-        ResultSet resultSet = statement.executeQuery();
+    public static Map<Integer, String> getMapToursByRequest(int tourType, int country, int transport, int hotelType, int foodComplex) {
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery(SQLRequests.GET_TOURS_BY_REQUEST);
+        query.setParameter(ColumnNames.TOURS_FK_TOUR_TYPE, tourType);
+        query.setParameter(ColumnNames.TOURS_FK_COUNTRY, country);
+        query.setParameter(ColumnNames.TOURS_FK_TRANSPORT, transport);
+        query.setParameter(ColumnNames.TOURS_FK_HOTEL_TYPE, hotelType);
+        query.setParameter(ColumnNames.TOURS_FK_FOOD_COMPLEX, foodComplex);
+        List<Tour> list = query.list();
         Map<Integer, String> map = new HashMap<>();
 
-        while (resultSet.next()) {
-            int id = resultSet.getInt(TOURS_ID);
+        for (Tour tour : list) {
+            int id = tour.getId();
             map.put(id, convertTourToString(id));
         }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
+        HibernateUtil.releaseSession(session);
         return map;
     }
 
-    public static String convertTourToString(int id) throws SQLException {
+    public static String convertTourToString(int id) {
         Tour tour = TourDAO.INSTANCE.getEntityByID(id);
         String tourString =
-                TourTypeDAO.INSTANCE.getEntityByID(tour.getFk_tour_type()).getTourType() + " " +
-                        CountryDAO.INSTANCE.getEntityByID(tour.getFk_country()).getCountry() + " " +
-                        TransportDAO.INSTANCE.getEntityByID(tour.getFk_transport()).getTransport() + " " +
-                        HotelTypeDAO.INSTANCE.getEntityByID(tour.getFk_hotel_type()).getHotelType() + " " +
-                        FoodComplexDAO.INSTANCE.getEntityByID(tour.getFk_food_complex()).getFoodComplex() + " " +
+                tour.getTourType().getTourType() + " " +
+                        tour.getCountry().getCountry() + " " +
+                        tour.getTransport().getTransport() + " " +
+                        tour.getHotelType().getHotelType() + " " +
+                        tour.getFoodComplex().getFoodComplex() + " " +
                         tour.getCost() + " " + tour.getDiscount();
         return tourString;
     }
 
-    public Map<Integer, String> getAllToursMap() throws SQLException {
+    public Map<Integer, String> getAllToursMap() {
         List<Tour> list = getAll();
         Map<Integer, String> map = new HashMap<>();
 

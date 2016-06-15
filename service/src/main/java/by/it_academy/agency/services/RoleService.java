@@ -1,48 +1,31 @@
 package by.it_academy.agency.services;
 
-import by.it_academy.agency.connectionpool.ConnectionPool;
-import by.it_academy.agency.constants.SQLRequests;
+import by.it_academy.agency.beans.Role;
 import by.it_academy.agency.dao.RoleDAO;
-import by.it_academy.agency.constants.ColumnNames;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-public class RoleService implements IService<by.it_academy.agency.beans.Role> {
+public class RoleService implements IService<Role> {
     @Override
-    public void add(by.it_academy.agency.beans.Role role) throws SQLException {
+    public void add(by.it_academy.agency.beans.Role role) {
 
     }
 
     @Override
-    public void update(by.it_academy.agency.beans.Role role) throws SQLException {
+    public void update(by.it_academy.agency.beans.Role role) {
 
     }
 
     @Override
-    public by.it_academy.agency.beans.Role getById(int id) throws SQLException {
+    public Role getById(int id) {
         return RoleDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<by.it_academy.agency.beans.Role> getAll() throws SQLException {
+    public List<Role> getAll() {
         return RoleDAO.INSTANCE.getAll();
     }
 
-    public static int getIdByRole(String role) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_ROLE_ID_BY_ROLE);
-        statement.setString(1, role);
-        ResultSet resultSet = statement.executeQuery();
-
-        int out = 0;
-        while (resultSet.next()) {
-            out = resultSet.getInt(ColumnNames.ROLES_ID);
-        }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return out;
+    public static Role getIdByRole(String role) {
+        return RoleDAO.INSTANCE.getEntityByRole(role);
     }
 }

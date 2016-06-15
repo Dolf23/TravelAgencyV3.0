@@ -32,9 +32,9 @@ public class RegistrationCommand extends AbstractCommand {
         int fkRole;
         try {
             if (null != request.getParameter(Parameters.ROLE))
-                fkRole = RoleService.getIdByRole(Parameters.ADMIN);
+                fkRole = RoleService.getIdByRole(Parameters.ADMIN).getId();
             else
-                fkRole = RoleService.getIdByRole(Parameters.USER);
+                fkRole = RoleService.getIdByRole(Parameters.USER).getId();
 
             if (areFieldsFull()) {
                 if (UserService.isNewUser(login)) {
@@ -71,14 +71,14 @@ public class RegistrationCommand extends AbstractCommand {
         return is;
     }
 
-    private void registration(int fkrole) throws SQLException {
+    private void registration(int role) throws SQLException {
         User user = new User();
         user.setName(name);
         user.setSurname(surname);
         user.setEmail(email);
         user.setLogin(login);
         user.setPassword(password);
-        user.setFk_Role(fkrole);
+        user.setRole(RoleService.getIdByRole("" + role));
         new UserService().add(user);
     }
 

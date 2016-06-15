@@ -2,7 +2,7 @@ package by.it_academy.agency.constants;
 
 public class SQLRequests {
     public static final String GET_ALL_ACTIONS = "from actions;";
-    public static final String GET_ACTION_BY_USER = String.format("SELECT * FROM actions WHERE %s=?;", ColumnNames.ACTIONS_FK_USER);
+    public static final String GET_ACTION_BY_USER = String.format("FROM actions WHERE %s.id=:%s;", ColumnNames.ACTIONS_FK_USER, ColumnNames.ACTIONS_FK_USER);
     public static final String DELETE_ACTION_BY_USER_AND_TOUR = String.format("DELETE FROM actions WHERE %s=? AND %s=?;", ColumnNames.ACTIONS_FK_USER, ColumnNames.ACTIONS_FK_TOUR);
 
     public static final String GET_ALL_ACTION_TYPES = "from action_types;";
@@ -22,7 +22,7 @@ public class SQLRequests {
     public static final String GET_ROLE_ID_BY_ROLE = String.format("SELECT * FROM roles WHERE %s=?;", ColumnNames.ROLES_ROLE);
 
     public static final String GET_ALL_TOURS = "from tours;";
-    public static final String GET_TOURS_BY_REQUEST = String.format("SELECT * FROM tours WHERE %s=? AND %s=? AND %s=? AND %s=? AND %s=?;", ColumnNames.TOURS_FK_TOUR_TYPE, ColumnNames.TOURS_FK_COUNTRY, ColumnNames.TOURS_FK_TRANSPORT, ColumnNames.TOURS_FK_HOTEL_TYPE, ColumnNames.TOURS_FK_FOOD_COMPLEX);
+    public static final String GET_TOURS_BY_REQUEST = String.format("FROM tours WHERE %s.id=:%s AND %s.id=:%s AND %s.id=:%s AND %s.id=:%s AND %s.id=:%s", ColumnNames.TOURS_FK_TOUR_TYPE, ColumnNames.TOURS_FK_TOUR_TYPE, ColumnNames.TOURS_FK_COUNTRY, ColumnNames.TOURS_FK_COUNTRY, ColumnNames.TOURS_FK_TRANSPORT, ColumnNames.TOURS_FK_TRANSPORT, ColumnNames.TOURS_FK_HOTEL_TYPE, ColumnNames.TOURS_FK_HOTEL_TYPE, ColumnNames.TOURS_FK_FOOD_COMPLEX, ColumnNames.TOURS_FK_FOOD_COMPLEX);
     public static final String UPDATE_TOUR_SET_DISCOUNT = String.format("UPDATE tours SET %s=? WHERE %s=?;", ColumnNames.TOURS_DISCOUNT, ColumnNames.TOURS_ID);
 
     public static final String GET_ALL_TOUR_TYPES = "from tour_types;";
@@ -32,8 +32,8 @@ public class SQLRequests {
     public static final String GET_ID_BY_TRANSPORT = String.format("SELECT * FROM transports WHERE %s=?;", ColumnNames.TRANSPORTS_TRANSPORT);
 
     public static final String GET_ALL_USERS = "from users;";
-    public static final String GET_USER_BY_LOGIN = String.format("SELECT * FROM users WHERE %s=?;", ColumnNames.USERS_LOGIN);
-    public static final String CHECK_AUTHORIZATION = String.format("SELECT %s, %s FROM users WHERE %s=? AND %s=?;", ColumnNames.USERS_LOGIN, ColumnNames.USERS_PASSWORD, ColumnNames.USERS_LOGIN, ColumnNames.USERS_PASSWORD);
-    public static final String CHECK_ROLE = String.format("SELECT %s FROM users WHERE %s=?;", ColumnNames.USERS_FK_ROLE, ColumnNames.USERS_LOGIN);
-    public static final String CHECK_LOGIN = String.format("SELECT %s FROM users WHERE %s=?;", ColumnNames.USERS_LOGIN, ColumnNames.USERS_LOGIN);
+    public static final String GET_USER_BY_LOGIN = String.format("FROM users WHERE %s=:%s", ColumnNames.USERS_LOGIN, ColumnNames.USERS_LOGIN);
+    public static final String CHECK_AUTHORIZATION = String.format("SELECT %s, %s FROM users WHERE %s=:%s AND %s=:%s", ColumnNames.USERS_LOGIN, ColumnNames.USERS_PASSWORD, ColumnNames.USERS_LOGIN, ColumnNames.USERS_LOGIN, ColumnNames.USERS_PASSWORD, ColumnNames.USERS_PASSWORD);
+    public static final String CHECK_ROLE = String.format("SELECT %s FROM users WHERE %s=:%s", ColumnNames.USERS_FK_ROLE, ColumnNames.USERS_LOGIN, ColumnNames.USERS_LOGIN);
+    public static final String CHECK_LOGIN = String.format("SELECT %s FROM users WHERE %s=:%s", ColumnNames.USERS_LOGIN, ColumnNames.USERS_LOGIN, ColumnNames.USERS_LOGIN);
 }

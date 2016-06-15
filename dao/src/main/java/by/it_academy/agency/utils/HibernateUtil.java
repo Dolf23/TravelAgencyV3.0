@@ -27,7 +27,7 @@ public class HibernateUtil {
         return session;
     }
 
-    public static void closeSession(Session session) throws HibernateException {
+    public static void releaseSession(Session session) throws HibernateException {
         if (session != null) {
             session.close();
             sessions.remove();

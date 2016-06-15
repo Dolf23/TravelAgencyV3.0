@@ -1,5 +1,6 @@
 package by.it_academy.agency.commands.admin;
 
+import by.it_academy.agency.beans.Country;
 import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
@@ -9,7 +10,6 @@ import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
 import by.it_academy.agency.services.CountryService;
 import by.it_academy.agency.services.TourService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
@@ -56,12 +56,12 @@ public class CreateTourCommand extends AbstractCommand {
     }
 
     private int getIdCountry(String country) throws SQLException {
-        int id = CountryService.getIdByCountry(country);
+        int id = CountryService.getIdByCountry(country).getId();
         if (0 == id) {
-            by.it_academy.agency.beans.Country entity = new by.it_academy.agency.beans.Country();
+            Country entity = new by.it_academy.agency.beans.Country();
             entity.setCountry(country);
             new CountryService().add(entity);
-            id = CountryService.getIdByCountry(country);
+            id = CountryService.getIdByCountry(country).getId();
         }
         return id;
     }

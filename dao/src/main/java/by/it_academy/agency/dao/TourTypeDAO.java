@@ -13,7 +13,9 @@ public enum TourTypeDAO implements DAO<TourType> {
     @Override
     public List<TourType> getAll() {
         Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_TOUR_TYPES).list();
+        List<TourType> list = session.createQuery(SQLRequests.GET_ALL_TOUR_TYPES).list();
+        HibernateUtil.releaseSession(session);
+        return list;
     }
 
     @Override
@@ -24,6 +26,15 @@ public enum TourTypeDAO implements DAO<TourType> {
     @Override
     public TourType getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
-        return (TourType) session.get(TourType.class, id);
+        TourType tourType = (TourType) session.get(TourType.class, id);
+        HibernateUtil.releaseSession(session);
+        return tourType;
+    }
+
+    public TourType getEntityByTourType(String tourType) {
+        Session session = HibernateUtil.getSession();
+        TourType tourTypeOut = (TourType) session.get(TourType.class, tourType);
+        HibernateUtil.releaseSession(session);
+        return tourTypeOut;
     }
 }

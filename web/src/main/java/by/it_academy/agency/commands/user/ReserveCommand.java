@@ -54,7 +54,7 @@ public class ReserveCommand extends AbstractCommand {
 
         action.setFk_tour(tour.getId());
         action.setFk_user(user.getId());
-        action.setFk_action(ActionTypeService.getIdByActionType(actionType));
+        action.setActionType(ActionTypeService.getIdByActionType(actionType));
         new ActionService().add(action);
     }
 }

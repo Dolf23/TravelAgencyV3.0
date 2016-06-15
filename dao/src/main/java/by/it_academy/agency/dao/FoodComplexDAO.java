@@ -15,7 +15,9 @@ public enum FoodComplexDAO implements DAO {
     @Override
     public List<FoodComplex> getAll() {
         Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_FOOD_COMPLEXES).list();
+        List<FoodComplex> list = session.createQuery(SQLRequests.GET_ALL_FOOD_COMPLEXES).list();
+        HibernateUtil.releaseSession(session);
+        return list;
     }
 
     @Override
@@ -24,8 +26,17 @@ public enum FoodComplexDAO implements DAO {
     }
 
     @Override
-    public Entity getEntityByID(int id) {
+    public FoodComplex getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
-        return (FoodComplex) session.get(FoodComplex.class, id);
+        FoodComplex foodComplex = (FoodComplex) session.get(FoodComplex.class, id);
+        HibernateUtil.releaseSession(session);
+        return foodComplex;
+    }
+
+    public FoodComplex getIdByFoodComplex(String foodComplex) {
+        Session session = HibernateUtil.getSession();
+        FoodComplex foodComplexOut = (FoodComplex) session.get(FoodComplex.class, foodComplex);
+        HibernateUtil.releaseSession(session);
+        return foodComplexOut;
     }
 }

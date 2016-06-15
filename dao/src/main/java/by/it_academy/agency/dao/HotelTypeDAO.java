@@ -13,7 +13,9 @@ public enum HotelTypeDAO implements DAO<HotelType> {
     @Override
     public List<HotelType> getAll() {
         Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_HOTEL_TYPES).list();
+        List<HotelType> list = session.createQuery(SQLRequests.GET_ALL_HOTEL_TYPES).list();
+        HibernateUtil.releaseSession(session);
+        return list;
     }
 
     @Override
@@ -24,6 +26,15 @@ public enum HotelTypeDAO implements DAO<HotelType> {
     @Override
     public HotelType getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
-        return (HotelType) session.get(HotelType.class, id);
+        HotelType hotelType = (HotelType) session.get(HotelType.class, id);
+        HibernateUtil.releaseSession(session);
+        return hotelType;
+    }
+
+    public HotelType getEntityByHotelType(String hotelType) {
+        Session session = HibernateUtil.getSession();
+        HotelType hotelTypeOut = (HotelType) session.get(HotelType.class, hotelType);
+        HibernateUtil.releaseSession(session);
+        return hotelTypeOut;
     }
 }

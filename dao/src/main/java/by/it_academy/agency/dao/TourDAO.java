@@ -13,7 +13,9 @@ public enum TourDAO implements DAO<Tour> {
     @Override
     public List<Tour> getAll() {
         Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_TOURS).list();
+        List<Tour> list = session.createQuery(SQLRequests.GET_ALL_TOURS).list();
+        HibernateUtil.releaseSession(session);
+        return list;
     }
 
     @Override
@@ -25,7 +27,9 @@ public enum TourDAO implements DAO<Tour> {
     @Override
     public Tour getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
-        return (Tour) session.get(Tour.class, id);
+        Tour tour = (Tour) session.get(Tour.class, id);
+        HibernateUtil.releaseSession(session);
+        return tour;
     }
 
     public void updateEntity(Tour tour) {

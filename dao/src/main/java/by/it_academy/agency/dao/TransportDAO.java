@@ -13,7 +13,9 @@ public enum TransportDAO implements DAO<Transport> {
     @Override
     public List<Transport> getAll() {
         Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_TRANSPORTS).list();
+        List<Transport> list = session.createQuery(SQLRequests.GET_ALL_TRANSPORTS).list();
+        HibernateUtil.releaseSession(session);
+        return list;
     }
 
     @Override
@@ -24,6 +26,15 @@ public enum TransportDAO implements DAO<Transport> {
     @Override
     public Transport getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
-        return (Transport) session.get(Transport.class, id);
+        Transport transport = (Transport) session.get(Transport.class, id);
+        HibernateUtil.releaseSession(session);
+        return transport;
+    }
+
+    public Transport getEntityByTransport(String transport) {
+        Session session = HibernateUtil.getSession();
+        Transport transportOut = (Transport) session.get(Transport.class, transport);
+        HibernateUtil.releaseSession(session);
+        return transportOut;
     }
 }

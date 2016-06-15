@@ -1,101 +1,102 @@
 package by.it_academy.agency.services;
 
-import by.it_academy.agency.connectionpool.ConnectionPool;
+import by.it_academy.agency.beans.Role;
+import by.it_academy.agency.beans.User;
 import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.UserDAO;
-import by.it_academy.agency.beans.User;
+import by.it_academy.agency.logger.logger;
+import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserService implements IService<User> {
     @Override
-    public void add(User user) throws SQLException {
-        UserDAO.INSTANCE.createEntity(user);
+    public void add(User user) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSession();
+            session.beginTransaction();
+            UserDAO.INSTANCE.createEntity(user);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            logger.writeLog(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            HibernateUtil.releaseSession(session);
+        }
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public void update(User user) {
 
     }
 
     @Override
-    public User getById(int id) throws SQLException {
+    public User getById(int id) {
         return UserDAO.INSTANCE.getEntityByID(id);
     }
 
     @Override
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() {
         return UserDAO.INSTANCE.getAll();
     }
 
-    public static boolean isAuthorized(String login, String password) throws SQLException {
+    public static boolean isAuthorized(String login, String password) {
         boolean isLogIn = false;
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.CHECK_AUTHORIZATION);
-        statement.setString(1, login);
-        statement.setString(2, password);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next())
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery(SQLRequests.CHECK_AUTHORIZATION);
+        query.setParameter(ColumnNames.USERS_LOGIN, login);
+        query.setParameter(ColumnNames.USERS_PASSWORD, password);
+        List list = query.list();
+        if (!list.isEmpty())
             isLogIn = true;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
+        HibernateUtil.releaseSession(session);
         return isLogIn;
     }
 
-    public static String checkRole(String login) throws SQLException {
-        String role = "";
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.CHECK_ROLE);
-        statement.setString(1, login);
-        ResultSet resultSet = statement.executeQuery();
+    public static String checkRole(String login) {
+        String roleString = "";
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery(SQLRequests.CHECK_ROLE);
+        query.setParameter(ColumnNames.USERS_LOGIN, login);
+        List<Integer> list = query.list();
 
-        if (resultSet.next()) {
-            PreparedStatement statementRole = connection.prepareStatement(SQLRequests.GET_ROLE_BY_ID);
-            statementRole.setInt(1, resultSet.getInt(ColumnNames.USERS_FK_ROLE));
-            ResultSet resultRole = statementRole.executeQuery();
-            if (resultRole.next())
-                role = resultRole.getString(ColumnNames.ROLES_ROLE);
+        if (!list.isEmpty()) {
+            int idRole = list.get(0);
+            Role role = (Role) session.get(Role.class, idRole);
+            if (role != null)
+                roleString = role.getRole();
         }
 
-        ConnectionPool.INSTANCE.releaseConnection(connection);
-        return role;
+        HibernateUtil.releaseSession(session);
+        return roleString;
     }
 
-    public static User getUserByLogin(String login) throws SQLException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_USER_BY_LOGIN);
-        statement.setString(1, login);
-
-        ResultSet resultSet = statement.executeQuery();
-
+    public static User getUserByLogin(String login) {
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery(SQLRequests.GET_USER_BY_LOGIN);
+        query.setParameter(ColumnNames.USERS_LOGIN, login);
+        List<User> list = query.list();
         User user = null;
-        while (resultSet.next()) {
-            user = new User();
-            user.setId(resultSet.getInt(USERS_ID));
-            user.setName(resultSet.getString(USERS_NAME));
-            user.setSurname(resultSet.getString(USERS_SURNAME));
-            user.setEmail(resultSet.getString(USERS_EMAIL));
-            user.setLogin(resultSet.getString(USERS_LOGIN));
-            user.setPassword(resultSet.getString(USERS_PASSWORD));
-            user.setFk_Role(resultSet.getInt(USERS_FK_ROLE));
+        if (!list.isEmpty()) {
+            user = list.get(0);
         }
-        ConnectionPool.INSTANCE.releaseConnection(connection);
+        HibernateUtil.releaseSession(session);
         return user;
     }
 
-    public static boolean isNewUser(String login) throws SQLException {
+    public static boolean isNewUser(String login) {
         boolean isNew = true;
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.CHECK_LOGIN);
-        statement.setString(1, login);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next())
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery(SQLRequests.CHECK_LOGIN);
+        query.setParameter(ColumnNames.USERS_LOGIN, login);
+        List list = query.list();
+        if (!list.isEmpty())
             isNew = false;
-        ConnectionPool.INSTANCE.releaseConnection(connection);
+        HibernateUtil.releaseSession(session);
         return isNew;
     }
 }

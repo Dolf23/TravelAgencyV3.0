@@ -13,7 +13,9 @@ public enum CountryDAO implements DAO<Country> {
     @Override
     public List<Country> getAll() {
         Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_COUNTRIES).list();
+        List<Country> list = session.createQuery(SQLRequests.GET_ALL_COUNTRIES).list();
+        HibernateUtil.releaseSession(session);
+        return list;
     }
 
     @Override
@@ -25,6 +27,15 @@ public enum CountryDAO implements DAO<Country> {
     @Override
     public Country getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
-        return (Country) session.get(Country.class, id);
+        Country country = (Country) session.get(Country.class, id);
+        HibernateUtil.releaseSession(session);
+        return country;
+    }
+
+    public Country getIdByCountry(String country) {
+        Session session = HibernateUtil.getSession();
+        Country countryOut = (Country) session.get(Country.class, country);
+        HibernateUtil.releaseSession(session);
+        return countryOut;
     }
 }
