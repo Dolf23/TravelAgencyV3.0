@@ -6,12 +6,12 @@ import java.util.List;
 
 public class RoleService implements IService<Role> {
     @Override
-    public void add(by.it_academy.agency.beans.Role role) {
+    public void add(Role role) {
 
     }
 
     @Override
-    public void update(by.it_academy.agency.beans.Role role) {
+    public void update(Role role) {
 
     }
 

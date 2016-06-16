@@ -19,7 +19,6 @@ public enum FoodComplexDAO implements DAO {
     public List<FoodComplex> getAll() {
         Session session = HibernateUtil.getSession();
         List<FoodComplex> list = session.createQuery(SQLRequests.GET_ALL_FOOD_COMPLEXES).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -32,7 +31,6 @@ public enum FoodComplexDAO implements DAO {
     public FoodComplex getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         FoodComplex foodComplex = (FoodComplex) session.get(FoodComplex.class, id);
-        HibernateUtil.releaseSession(session);
         return foodComplex;
     }
 
@@ -41,7 +39,6 @@ public enum FoodComplexDAO implements DAO {
         Criteria criteria = session.createCriteria(FoodComplex.class);
         criteria.add(Restrictions.eq(ColumnNames.FOOD_COMPLEXES_FOOD_COMPLEX, foodComplex));
         FoodComplex foodComplexOut = (FoodComplex) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return foodComplexOut;
     }
 }

@@ -25,8 +25,6 @@ public class TourService implements IService<Tour> {
         } catch (RuntimeException e) {
             logger.writeLog(e.getMessage());
             session.getTransaction().rollback();
-        } finally {
-            HibernateUtil.releaseSession(session);
         }
     }
 
@@ -41,8 +39,6 @@ public class TourService implements IService<Tour> {
         } catch (RuntimeException e) {
             logger.writeLog(e.getMessage());
             session.getTransaction().rollback();
-        } finally {
-            HibernateUtil.releaseSession(session);
         }
     }
 
@@ -77,7 +73,6 @@ public class TourService implements IService<Tour> {
             int id = tour.getId();
             map.put(id, convertTourToString(id));
         }
-        HibernateUtil.releaseSession(session);
         return map;
     }
 

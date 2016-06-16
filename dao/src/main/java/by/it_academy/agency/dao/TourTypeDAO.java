@@ -17,7 +17,6 @@ public enum TourTypeDAO implements DAO<TourType> {
     public List<TourType> getAll() {
         Session session = HibernateUtil.getSession();
         List<TourType> list = session.createQuery(SQLRequests.GET_ALL_TOUR_TYPES).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -30,7 +29,6 @@ public enum TourTypeDAO implements DAO<TourType> {
     public TourType getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         TourType tourType = (TourType) session.get(TourType.class, id);
-        HibernateUtil.releaseSession(session);
         return tourType;
     }
 
@@ -39,7 +37,6 @@ public enum TourTypeDAO implements DAO<TourType> {
         Criteria criteria = session.createCriteria(TourType.class);
         criteria.add(Restrictions.eq(ColumnNames.TOUR_TYPES_TOUR_TYPE, tourType));
         TourType tourTypeOut = (TourType) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return tourTypeOut;
     }
 }

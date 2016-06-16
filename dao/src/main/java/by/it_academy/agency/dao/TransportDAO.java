@@ -17,7 +17,6 @@ public enum TransportDAO implements DAO<Transport> {
     public List<Transport> getAll() {
         Session session = HibernateUtil.getSession();
         List<Transport> list = session.createQuery(SQLRequests.GET_ALL_TRANSPORTS).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -30,7 +29,6 @@ public enum TransportDAO implements DAO<Transport> {
     public Transport getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         Transport transport = (Transport) session.get(Transport.class, id);
-        HibernateUtil.releaseSession(session);
         return transport;
     }
 
@@ -39,7 +37,6 @@ public enum TransportDAO implements DAO<Transport> {
         Criteria criteria = session.createCriteria(Transport.class);
         criteria.add(Restrictions.eq(ColumnNames.TRANSPORTS_TRANSPORT, transport));
         Transport transportOut = (Transport) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return transportOut;
     }
 }

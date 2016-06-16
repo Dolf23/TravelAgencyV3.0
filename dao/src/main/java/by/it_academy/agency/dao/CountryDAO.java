@@ -17,7 +17,6 @@ public enum CountryDAO implements DAO<Country> {
     public List<Country> getAll() {
         Session session = HibernateUtil.getSession();
         List<Country> list = session.createQuery(SQLRequests.GET_ALL_COUNTRIES).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -31,7 +30,6 @@ public enum CountryDAO implements DAO<Country> {
     public Country getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         Country country = (Country) session.get(Country.class, id);
-        HibernateUtil.releaseSession(session);
         return country;
     }
 
@@ -40,7 +38,6 @@ public enum CountryDAO implements DAO<Country> {
         Criteria criteria = session.createCriteria(Country.class);
         criteria.add(Restrictions.eq(ColumnNames.COUNTRIES_COUNTRY, country));
         Country countryOut = (Country) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return countryOut;
     }
 }

@@ -50,7 +50,6 @@ public class ActionService implements IService<Action> {
         Session session = HibernateUtil.getSession();
         Query query = session.createQuery(SQLRequests.GET_ACTION_BY_USER);
         query.setParameter(ColumnNames.ACTIONS_FK_USER, user.getId());
-        session.flush();
         List<Action> list = query.list();
         Map<Integer, String> map = new HashMap<>();
 

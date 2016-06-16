@@ -20,8 +20,6 @@ public class CountryService implements IService<Country> {
         } catch (RuntimeException e) {
             logger.writeLog(e.getMessage());
             session.getTransaction().rollback();
-        } finally {
-            HibernateUtil.releaseSession(session);
         }
     }
 

@@ -18,7 +18,6 @@ public enum RoleDAO implements DAO<Role> {
     public List<Role> getAll() {
         Session session = HibernateUtil.getSession();
         List<Role> list = session.createQuery(SQLRequests.GET_ALL_ROLES).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -31,7 +30,6 @@ public enum RoleDAO implements DAO<Role> {
     public Role getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         Role role = (Role) session.get(Role.class, id);
-        HibernateUtil.releaseSession(session);
         return role;
     }
 
@@ -40,7 +38,6 @@ public enum RoleDAO implements DAO<Role> {
         Criteria criteria = session.createCriteria(Role.class);
         criteria.add(Restrictions.eq(ColumnNames.ROLES_ROLE, role));
         Role roleOut = (Role) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return roleOut;
     }
 }

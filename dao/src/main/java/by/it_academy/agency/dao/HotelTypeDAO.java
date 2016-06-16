@@ -17,7 +17,6 @@ public enum HotelTypeDAO implements DAO<HotelType> {
     public List<HotelType> getAll() {
         Session session = HibernateUtil.getSession();
         List<HotelType> list = session.createQuery(SQLRequests.GET_ALL_HOTEL_TYPES).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -30,7 +29,6 @@ public enum HotelTypeDAO implements DAO<HotelType> {
     public HotelType getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         HotelType hotelType = (HotelType) session.get(HotelType.class, id);
-        HibernateUtil.releaseSession(session);
         return hotelType;
     }
 
@@ -39,7 +37,6 @@ public enum HotelTypeDAO implements DAO<HotelType> {
         Criteria criteria = session.createCriteria(HotelType.class);
         criteria.add(Restrictions.eq(ColumnNames.HOTEL_TYPES_HOTEL_TYPE, hotelType));
         HotelType hotelTypeOut = (HotelType) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return hotelTypeOut;
     }
 }

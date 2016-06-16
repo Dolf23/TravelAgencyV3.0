@@ -24,8 +24,6 @@ public class UserService implements IService<User> {
         } catch (RuntimeException e) {
             logger.writeLog(e.getMessage());
             session.getTransaction().rollback();
-        } finally {
-            HibernateUtil.releaseSession(session);
         }
     }
 
@@ -53,7 +51,6 @@ public class UserService implements IService<User> {
         List list = query.list();
         if (!list.isEmpty())
             isLogIn = true;
-        HibernateUtil.releaseSession(session);
         return isLogIn;
     }
 
@@ -70,8 +67,6 @@ public class UserService implements IService<User> {
             if (role != null)
                 roleString = role.getRole();
         }
-
-        HibernateUtil.releaseSession(session);
         return roleString;
     }
 
@@ -84,7 +79,6 @@ public class UserService implements IService<User> {
         if (!list.isEmpty()) {
             user = list.get(0);
         }
-        HibernateUtil.releaseSession(session);
         return user;
     }
 
@@ -96,7 +90,6 @@ public class UserService implements IService<User> {
         List list = query.list();
         if (!list.isEmpty())
             isNew = false;
-        HibernateUtil.releaseSession(session);
         return isNew;
     }
 }

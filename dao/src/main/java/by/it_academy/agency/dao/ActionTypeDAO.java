@@ -18,7 +18,6 @@ public enum ActionTypeDAO implements DAO<ActionType> {
     public List<ActionType> getAll() {
         Session session = HibernateUtil.getSession();
         List<ActionType> list = session.createQuery(SQLRequests.GET_ALL_ACTION_TYPES).list();
-        HibernateUtil.releaseSession(session);
         return list;
     }
 
@@ -30,7 +29,6 @@ public enum ActionTypeDAO implements DAO<ActionType> {
     public ActionType getEntityByID(int id) {
         Session session = HibernateUtil.getSession();
         ActionType actionType = (ActionType) session.get(ActionType.class, id);
-        HibernateUtil.releaseSession(session);
         return actionType;
     }
 
@@ -39,7 +37,6 @@ public enum ActionTypeDAO implements DAO<ActionType> {
         Criteria criteria = session.createCriteria(ActionType.class);
         criteria.add(Restrictions.eq(ColumnNames.ACTION_TYPES_ACTION_TYPE, actionType));
         ActionType actionTypeOut = (ActionType) criteria.uniqueResult();
-        HibernateUtil.releaseSession(session);
         return actionTypeOut;
     }
 }
