@@ -27,6 +27,6 @@ public class FoodComplexService implements IService<FoodComplex> {
     }
 
     public FoodComplex getIdByFoodComplex(String foodComplex) {
-        return FoodComplexDAO.INSTANCE.getIdByFoodComplex(foodComplex);
+        return FoodComplexDAO.INSTANCE.getEntityByFoodComplex(foodComplex);
     }
 }
