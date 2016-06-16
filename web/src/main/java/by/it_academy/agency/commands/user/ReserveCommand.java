@@ -1,5 +1,8 @@
 package by.it_academy.agency.commands.user;
 
+import by.it_academy.agency.beans.Action;
+import by.it_academy.agency.beans.Tour;
+import by.it_academy.agency.beans.User;
 import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
@@ -25,10 +28,10 @@ public class ReserveCommand extends AbstractCommand {
             if (null != idTourString) {
                 int idTour = Integer.parseInt(idTourString);
                 TourService tourService = new TourService();
-                by.it_academy.agency.beans.Tour tour = tourService.getById(idTour);
+                Tour tour = tourService.getById(idTour);
 
                 HttpSession session = request.getSession();
-                by.it_academy.agency.beans.User user = (by.it_academy.agency.beans.User) session.getAttribute(Parameters.USER);
+                User user = (User) session.getAttribute(Parameters.USER);
 
                 String actionType = request.getParameter(Parameters.COMMAND);
 
@@ -41,7 +44,7 @@ public class ReserveCommand extends AbstractCommand {
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.EMPTY_CHOICE));
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
@@ -49,12 +52,13 @@ public class ReserveCommand extends AbstractCommand {
         return page;
     }
 
-    private void reserveTour(by.it_academy.agency.beans.Tour tour, by.it_academy.agency.beans.User user, String actionType) throws SQLException {
-        by.it_academy.agency.beans.Action action = new by.it_academy.agency.beans.Action();
+    private void reserveTour(Tour tour, User user, String actionType) throws SQLException {
+        Action action = new Action();
 
-        action.setFk_tour(tour.getId());
-        action.setFk_user(user.getId());
-        action.setActionType(ActionTypeService.getIdByActionType(actionType));
+        action.setTour(tour);
+        action.setUser(user);
+        ActionTypeService actionTypeService = new ActionTypeService();
+        action.setActionType(actionTypeService.getIdByActionType(actionType));
         new ActionService().add(action);
     }
 }

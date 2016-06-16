@@ -24,7 +24,7 @@ public class GoToReservedToursCommand extends AbstractCommand {
 
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.USER_RESERVED_TOURS_PAGE_PATH);
             request.setAttribute(Parameters.TOURS_MAP, ActionService.getUserActions(user));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));

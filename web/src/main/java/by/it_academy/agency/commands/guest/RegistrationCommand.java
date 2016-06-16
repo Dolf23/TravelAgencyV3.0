@@ -31,10 +31,11 @@ public class RegistrationCommand extends AbstractCommand {
         password = request.getParameter(Parameters.PASSWORD);
         int fkRole;
         try {
+            RoleService roleService = new RoleService();
             if (null != request.getParameter(Parameters.ROLE))
-                fkRole = RoleService.getIdByRole(Parameters.ADMIN).getId();
+                fkRole = roleService.getIdByRole(Parameters.ADMIN).getId();
             else
-                fkRole = RoleService.getIdByRole(Parameters.USER).getId();
+                fkRole = roleService.getIdByRole(Parameters.USER).getId();
 
             if (areFieldsFull()) {
                 if (UserService.isNewUser(login)) {
@@ -78,7 +79,8 @@ public class RegistrationCommand extends AbstractCommand {
         user.setEmail(email);
         user.setLogin(login);
         user.setPassword(password);
-        user.setRole(RoleService.getIdByRole("" + role));
+        RoleService roleService = new RoleService();
+        user.setRole(roleService.getIdByRole("" + role));
         new UserService().add(user);
     }
 

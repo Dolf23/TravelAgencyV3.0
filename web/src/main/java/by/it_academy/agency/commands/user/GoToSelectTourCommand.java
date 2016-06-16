@@ -36,7 +36,7 @@ public class GoToSelectTourCommand extends AbstractCommand {
             FoodComplexService foodComplexService = new FoodComplexService();
             List<by.it_academy.agency.beans.FoodComplex> foodComplexList = foodComplexService.getAll();
             request.setAttribute(Parameters.FOOD_COMPLEX_LIST, foodComplexList);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.writeLog(e.getMessage());
         }
         return page;

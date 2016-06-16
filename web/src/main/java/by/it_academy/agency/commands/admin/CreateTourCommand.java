@@ -1,6 +1,7 @@
 package by.it_academy.agency.commands.admin;
 
 import by.it_academy.agency.beans.Country;
+import by.it_academy.agency.beans.Tour;
 import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
@@ -8,8 +9,8 @@ import by.it_academy.agency.constants.Parameters;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.CountryService;
-import by.it_academy.agency.services.TourService;
+import by.it_academy.agency.services.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
@@ -56,23 +57,29 @@ public class CreateTourCommand extends AbstractCommand {
     }
 
     private int getIdCountry(String country) throws SQLException {
-        int id = CountryService.getIdByCountry(country).getId();
+        CountryService countryService = new CountryService();
+        int id = countryService.getIdByCountry(country).getId();
         if (0 == id) {
             Country entity = new by.it_academy.agency.beans.Country();
             entity.setCountry(country);
             new CountryService().add(entity);
-            id = CountryService.getIdByCountry(country).getId();
+            id = countryService.getIdByCountry(country).getId();
         }
         return id;
     }
 
     private void createTour() throws SQLException {
-        by.it_academy.agency.beans.Tour tour = new by.it_academy.agency.beans.Tour();
-        tour.setFk_country(fk_country);
-        tour.setFk_tour_type(fk_tour_type);
-        tour.setFk_transport(fk_transport);
-        tour.setFk_hotel_type(fk_hotel_type);
-        tour.setFk_food_complex(fk_food_complex);
+        Tour tour = new Tour();
+        CountryService countryService = new CountryService();
+        tour.setCountry(countryService.getById(fk_country));
+        TourTypeService tourTypeService = new TourTypeService();
+        tour.setTourType(tourTypeService.getById(fk_tour_type));
+        TransportService transportService = new TransportService();
+        tour.setTransport(transportService.getById(fk_transport));
+        HotelTypeService hotelTypeService = new HotelTypeService();
+        tour.setHotelType(hotelTypeService.getById(fk_hotel_type));
+        FoodComplexService foodComplexService = new FoodComplexService();
+        tour.setFoodComplex(foodComplexService.getById(fk_food_complex));
         tour.setCost(cost);
         tour.setDiscount(discount);
         new TourService().add(tour);
