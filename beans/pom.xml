@@ -13,7 +13,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>entity</name>
+    <name>beans</name>
 
     <dependencies>
         <dependency>
