@@ -25,7 +25,7 @@ public class ActionTypeService implements IService<ActionType> {
         return ActionTypeDAO.INSTANCE.getAll();
     }
 
-    public static ActionType getIdByActionType(String actionType) {
+    public ActionType getIdByActionType(String actionType) {
         return ActionTypeDAO.INSTANCE.getEntityByActionType(actionType);
     }
 }

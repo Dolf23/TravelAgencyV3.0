@@ -40,7 +40,7 @@ public class CountryService implements IService<Country> {
         return CountryDAO.INSTANCE.getAll();
     }
 
-    public static Country getIdByCountry(String country) {
+    public Country getIdByCountry(String country) {
         return CountryDAO.INSTANCE.getEntityByCountry(country);
     }
 }

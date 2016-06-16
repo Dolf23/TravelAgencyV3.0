@@ -25,7 +25,7 @@ public class RoleService implements IService<Role> {
         return RoleDAO.INSTANCE.getAll();
     }
 
-    public static Role getIdByRole(String role) {
+    public Role getIdByRole(String role) {
         return RoleDAO.INSTANCE.getEntityByRole(role);
     }
 }
