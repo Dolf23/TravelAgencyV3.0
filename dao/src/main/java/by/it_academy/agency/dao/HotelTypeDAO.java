@@ -1,9 +1,12 @@
 package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.HotelType;
+import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -33,7 +36,9 @@ public enum HotelTypeDAO implements DAO<HotelType> {
 
     public HotelType getEntityByHotelType(String hotelType) {
         Session session = HibernateUtil.getSession();
-        HotelType hotelTypeOut = (HotelType) session.get(HotelType.class, hotelType);
+        Criteria criteria = session.createCriteria(HotelType.class);
+        criteria.add(Restrictions.eq(ColumnNames.HOTEL_TYPES_HOTEL_TYPE, hotelType));
+        HotelType hotelTypeOut = (HotelType) criteria.uniqueResult();
         HibernateUtil.releaseSession(session);
         return hotelTypeOut;
     }

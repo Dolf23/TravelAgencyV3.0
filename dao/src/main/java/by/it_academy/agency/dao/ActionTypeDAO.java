@@ -2,9 +2,12 @@ package by.it_academy.agency.dao;
 
 
 import by.it_academy.agency.beans.ActionType;
+import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -31,9 +34,11 @@ public enum ActionTypeDAO implements DAO<ActionType> {
         return actionType;
     }
 
-    public ActionType getEntityByValue(String actionType) {
+    public ActionType getEntityByActionType(String actionType) {
         Session session = HibernateUtil.getSession();
-        ActionType actionTypeOut = (ActionType) session.get(ActionType.class, actionType);
+        Criteria criteria = session.createCriteria(ActionType.class);
+        criteria.add(Restrictions.eq(ColumnNames.ACTION_TYPES_ACTION_TYPE, actionType));
+        ActionType actionTypeOut = (ActionType) criteria.uniqueResult();
         HibernateUtil.releaseSession(session);
         return actionTypeOut;
     }

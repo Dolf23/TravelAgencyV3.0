@@ -1,9 +1,12 @@
 package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Transport;
+import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -33,7 +36,9 @@ public enum TransportDAO implements DAO<Transport> {
 
     public Transport getEntityByTransport(String transport) {
         Session session = HibernateUtil.getSession();
-        Transport transportOut = (Transport) session.get(Transport.class, transport);
+        Criteria criteria = session.createCriteria(Transport.class);
+        criteria.add(Restrictions.eq(ColumnNames.TRANSPORTS_TRANSPORT, transport));
+        Transport transportOut = (Transport) criteria.uniqueResult();
         HibernateUtil.releaseSession(session);
         return transportOut;
     }

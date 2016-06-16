@@ -1,9 +1,13 @@
 package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Role;
+import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import java.util.List;
 
 
@@ -33,7 +37,9 @@ public enum RoleDAO implements DAO<Role> {
 
     public Role getEntityByRole(String role) {
         Session session = HibernateUtil.getSession();
-        Role roleOut = (Role) session.get(Role.class, role);
+        Criteria criteria = session.createCriteria(Role.class);
+        criteria.add(Restrictions.eq(ColumnNames.ROLES_ROLE, role));
+        Role roleOut = (Role) criteria.uniqueResult();
         HibernateUtil.releaseSession(session);
         return roleOut;
     }

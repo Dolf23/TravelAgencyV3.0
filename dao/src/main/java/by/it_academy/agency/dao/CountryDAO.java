@@ -1,9 +1,12 @@
 package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Country;
+import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -32,9 +35,11 @@ public enum CountryDAO implements DAO<Country> {
         return country;
     }
 
-    public Country getIdByCountry(String country) {
+    public Country getEntityByCountry(String country) {
         Session session = HibernateUtil.getSession();
-        Country countryOut = (Country) session.get(Country.class, country);
+        Criteria criteria = session.createCriteria(Country.class);
+        criteria.add(Restrictions.eq(ColumnNames.COUNTRIES_COUNTRY, country));
+        Country countryOut = (Country) criteria.uniqueResult();
         HibernateUtil.releaseSession(session);
         return countryOut;
     }
