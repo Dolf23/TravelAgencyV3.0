@@ -1,10 +1,11 @@
 package by.it_academy.agency.commands.guest;
 
+import by.it_academy.agency.beans.User;
 import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
 import by.it_academy.agency.constants.Parameters;
-import by.it_academy.agency.beans.User;
+import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
@@ -12,7 +13,6 @@ import by.it_academy.agency.services.RoleService;
 import by.it_academy.agency.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 
 public class RegistrationCommand extends AbstractCommand {
     private static String name;
@@ -50,7 +50,7 @@ public class RegistrationCommand extends AbstractCommand {
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.REGISTRATION_PAGE_PATH);
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.EMPTY_FIELDS));
             }
-        } catch (SQLException e) {
+        } catch (ServiceException e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
@@ -72,7 +72,7 @@ public class RegistrationCommand extends AbstractCommand {
         return is;
     }
 
-    private void registration(int role) throws SQLException {
+    private void registration(int role) throws ServiceException {
         User user = new User();
         user.setName(name);
         user.setSurname(surname);

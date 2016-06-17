@@ -6,13 +6,13 @@ import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
 import by.it_academy.agency.constants.Parameters;
+import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
 import by.it_academy.agency.services.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 
 
 public class CreateTourCommand extends AbstractCommand {
@@ -45,7 +45,7 @@ public class CreateTourCommand extends AbstractCommand {
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ADMIN_CREATE_TOUR_PAGE_PATH);
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.EMPTY_FIELDS));
             }
-        } catch (SQLException e) {
+        } catch (ServiceException e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
@@ -56,19 +56,19 @@ public class CreateTourCommand extends AbstractCommand {
         return page;
     }
 
-    private int getIdCountry(String country) throws SQLException {
+    private int getIdCountry(String country) throws ServiceException {
         CountryService countryService = new CountryService();
-        int id = countryService.getIdByCountry(country).getId();
+        int id = countryService.getEntityByCountry(country).getId();
         if (0 == id) {
             Country entity = new by.it_academy.agency.beans.Country();
             entity.setCountry(country);
             new CountryService().add(entity);
-            id = countryService.getIdByCountry(country).getId();
+            id = countryService.getEntityByCountry(country).getId();
         }
         return id;
     }
 
-    private void createTour() throws SQLException {
+    private void createTour() throws ServiceException {
         Tour tour = new Tour();
         CountryService countryService = new CountryService();
         tour.setCountry(countryService.getById(fk_country));

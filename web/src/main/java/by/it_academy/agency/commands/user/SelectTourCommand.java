@@ -4,12 +4,13 @@ import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
 import by.it_academy.agency.constants.Parameters;
+import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
 import by.it_academy.agency.services.TourService;
+
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.Map;
 
 public class SelectTourCommand extends AbstractCommand {
@@ -32,7 +33,7 @@ public class SelectTourCommand extends AbstractCommand {
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.USER_SELECT_TOUR_PAGE_PATH);
                 request.setAttribute(Parameters.ERROR_TOUR_LIST_IS_EMPTY, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_TOURS_LIST));
             }
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));

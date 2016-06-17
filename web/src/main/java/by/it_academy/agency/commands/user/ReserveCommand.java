@@ -7,6 +7,7 @@ import by.it_academy.agency.commands.AbstractCommand;
 import by.it_academy.agency.constants.ConfigsConstants;
 import by.it_academy.agency.constants.MessageConstants;
 import by.it_academy.agency.constants.Parameters;
+import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
@@ -16,7 +17,6 @@ import by.it_academy.agency.services.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class ReserveCommand extends AbstractCommand {
     @Override
@@ -44,7 +44,7 @@ public class ReserveCommand extends AbstractCommand {
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.EMPTY_CHOICE));
             }
 
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
@@ -52,13 +52,13 @@ public class ReserveCommand extends AbstractCommand {
         return page;
     }
 
-    private void reserveTour(Tour tour, User user, String actionType) throws SQLException {
+    private void reserveTour(Tour tour, User user, String actionType) throws ServiceException {
         Action action = new Action();
 
         action.setTour(tour);
         action.setUser(user);
         ActionTypeService actionTypeService = new ActionTypeService();
-        action.setActionType(actionTypeService.getIdByActionType(actionType));
+        action.setActionType(actionTypeService.getEntityByActionType(actionType));
         new ActionService().add(action);
     }
 }
