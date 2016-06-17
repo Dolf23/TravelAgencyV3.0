@@ -1,12 +1,11 @@
 package by.it_academy.agency.services;
 
 import by.it_academy.agency.beans.Tour;
-import by.it_academy.agency.constants.ColumnNames;
-import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.TourDAO;
+import by.it_academy.agency.exceptions.DAOException;
+import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.utils.HibernateUtil;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.HashMap;
@@ -14,81 +13,107 @@ import java.util.List;
 import java.util.Map;
 
 public class TourService implements IService<Tour> {
+
+    private TourDAO tourDAO = new TourDAO();
+
     @Override
-    public void add(Tour tour) {
+    public void add(Tour tour) throws ServiceException {
         Session session = null;
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
-            TourDAO.INSTANCE.createEntity(tour);
+            tourDAO.createEntity(tour);
             session.getTransaction().commit();
-        } catch (RuntimeException e) {
-            logger.writeLog(e.getMessage());
+        } catch (DAOException e) {
+            logger.writeLog("TourService add error:" + e.getMessage());
             session.getTransaction().rollback();
+            throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
-    public void update(Tour tour) {
+    public void update(Tour tour) throws ServiceException {
         Session session = null;
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
-            TourDAO.INSTANCE.updateEntity(tour);
+            tourDAO.updateEntity(tour);
             session.getTransaction().commit();
-        } catch (RuntimeException e) {
-            logger.writeLog(e.getMessage());
+        } catch (DAOException e) {
+            logger.writeLog("TourService update error:" + e.getMessage());
             session.getTransaction().rollback();
+            throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
-    public Tour getById(int id) {
-        return TourDAO.INSTANCE.getEntityByID(id);
+    public Tour getById(int id) throws ServiceException {
+        try {
+            return tourDAO.getEntityByID(id);
+        } catch (DAOException e) {
+            logger.writeLog("TourService getById error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
-    public List<Tour> getAll() {
-        return TourDAO.INSTANCE.getAll();
-    }
-
-    public static void makeDiscount(int idTour, int amountDiscount) {
-        Tour tour = TourDAO.INSTANCE.getEntityByID(idTour);
-        tour.setDiscount(amountDiscount);
-        new TourService().update(tour);
-    }
-
-    public static Map<Integer, String> getMapToursByRequest(int tourType, int country, int transport, int hotelType, int foodComplex) {
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery(SQLRequests.GET_TOURS_BY_REQUEST);
-        query.setParameter(ColumnNames.TOURS_FK_TOUR_TYPE, tourType);
-        query.setParameter(ColumnNames.TOURS_FK_COUNTRY, country);
-        query.setParameter(ColumnNames.TOURS_FK_TRANSPORT, transport);
-        query.setParameter(ColumnNames.TOURS_FK_HOTEL_TYPE, hotelType);
-        query.setParameter(ColumnNames.TOURS_FK_FOOD_COMPLEX, foodComplex);
-        List<Tour> list = query.list();
-        Map<Integer, String> map = new HashMap<>();
-
-        for (Tour tour : list) {
-            int id = tour.getId();
-            map.put(id, convertTourToString(id));
+    public List<Tour> getAll() throws ServiceException {
+        try {
+            return tourDAO.getAll();
+        } catch (DAOException e) {
+            logger.writeLog("TourService getAll error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
-        return map;
     }
 
-    public static String convertTourToString(int id) {
-        Tour tour = TourDAO.INSTANCE.getEntityByID(id);
-        String tourString =
-                tour.getTourType().getTourType() + " " +
-                        tour.getCountry().getCountry() + " " +
-                        tour.getTransport().getTransport() + " " +
-                        tour.getHotelType().getHotelType() + " " +
-                        tour.getFoodComplex().getFoodComplex() + " " +
-                        tour.getCost() + " " + tour.getDiscount();
-        return tourString;
+    public void makeDiscount(int idTour, int amountDiscount) throws ServiceException {
+        try {
+            Tour tour = tourDAO.getEntityByID(idTour);
+            tour.setDiscount(amountDiscount);
+            update(tour);
+        } catch (DAOException e) {
+            logger.writeLog("TourService makeDiscount error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
     }
 
-    public Map<Integer, String> getAllToursMap() {
+    public static Map<Integer, String> getMapToursByRequest(int tourType, int country, int transport, int hotelType, int foodComplex) throws ServiceException {
+        try {
+            TourDAO tourDAO = new TourDAO();
+            List<Tour> list = tourDAO.getToursByRequest(tourType, country, transport, hotelType, foodComplex);
+
+            Map<Integer, String> map = new HashMap<>();
+
+            for (Tour tour : list) {
+                int id = tour.getId();
+                map.put(id, convertTourToString(id));
+            }
+            return map;
+        } catch (DAOException e) {
+            logger.writeLog("TourService getMapToursByRequest error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public static String convertTourToString(int id) throws ServiceException {
+        try {
+            TourDAO tourDAO = new TourDAO();
+            Tour tour = tourDAO.getEntityByID(id);
+            String tourString =
+                    tour.getTourType().getTourType() + " " +
+                            tour.getCountry().getCountry() + " " +
+                            tour.getTransport().getTransport() + " " +
+                            tour.getHotelType().getHotelType() + " " +
+                            tour.getFoodComplex().getFoodComplex() + " " +
+                            tour.getCost() + " " + tour.getDiscount();
+            return tourString;
+        } catch (DAOException e) {
+            logger.writeLog("TourService convertTourToString error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Map<Integer, String> getAllToursMap() throws ServiceException {
         List<Tour> list = getAll();
         Map<Integer, String> map = new HashMap<>();
 
@@ -98,6 +123,4 @@ public class TourService implements IService<Tour> {
         }
         return map;
     }
-
-
 }

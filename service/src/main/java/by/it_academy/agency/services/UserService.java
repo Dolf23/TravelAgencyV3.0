@@ -1,29 +1,30 @@
 package by.it_academy.agency.services;
 
-import by.it_academy.agency.beans.Role;
 import by.it_academy.agency.beans.User;
-import by.it_academy.agency.constants.ColumnNames;
-import by.it_academy.agency.constants.SQLRequests;
 import by.it_academy.agency.dao.UserDAO;
+import by.it_academy.agency.exceptions.DAOException;
+import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.utils.HibernateUtil;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
 
 public class UserService implements IService<User> {
+    private UserDAO userDAO = new UserDAO();
+
     @Override
-    public void add(User user) {
+    public void add(User user) throws ServiceException {
         Session session = null;
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
-            UserDAO.INSTANCE.createEntity(user);
+            userDAO.createEntity(user);
             session.getTransaction().commit();
-        } catch (RuntimeException e) {
-            logger.writeLog(e.getMessage());
+        } catch (DAOException e) {
+            logger.writeLog("UserService add error:" + e.getMessage());
             session.getTransaction().rollback();
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -33,63 +34,72 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public User getById(int id) {
-        return UserDAO.INSTANCE.getEntityByID(id);
+    public User getById(int id) throws ServiceException {
+        try {
+            return userDAO.getEntityByID(id);
+        } catch (DAOException e) {
+            logger.writeLog("UserService getById error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
-    public List<User> getAll() {
-        return UserDAO.INSTANCE.getAll();
-    }
-
-    public static boolean isAuthorized(String login, String password) {
-        boolean isLogIn = false;
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery(SQLRequests.CHECK_AUTHORIZATION);
-        query.setParameter(ColumnNames.USERS_LOGIN, login);
-        query.setParameter(ColumnNames.USERS_PASSWORD, password);
-        List list = query.list();
-        if (!list.isEmpty())
-            isLogIn = true;
-        return isLogIn;
-    }
-
-    public static String checkRole(String login) {
-        String roleString = "";
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery(SQLRequests.CHECK_ROLE);
-        query.setParameter(ColumnNames.USERS_LOGIN, login);
-        List<Integer> list = query.list();
-
-        if (!list.isEmpty()) {
-            int idRole = list.get(0);
-            Role role = (Role) session.get(Role.class, idRole);
-            if (role != null)
-                roleString = role.getRole();
+    public List<User> getAll() throws ServiceException {
+        try {
+            return userDAO.getAll();
+        } catch (DAOException e) {
+            logger.writeLog("UserService getAll error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
-        return roleString;
     }
 
-    public static User getUserByLogin(String login) {
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery(SQLRequests.GET_USER_BY_LOGIN);
-        query.setParameter(ColumnNames.USERS_LOGIN, login);
-        List<User> list = query.list();
-        User user = null;
-        if (!list.isEmpty()) {
-            user = list.get(0);
+    public static boolean isAuthorized(String login, String password) throws ServiceException {
+        try {
+            boolean isLogIn = false;
+            UserDAO userDAO = new UserDAO();
+            User user = userDAO.getUserByLoginAndPassword(login, password);
+            if (user != null)
+                isLogIn = true;
+            return isLogIn;
+        } catch (DAOException e) {
+            logger.writeLog("UserService isAuthorized error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
-        return user;
     }
 
-    public static boolean isNewUser(String login) {
-        boolean isNew = true;
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery(SQLRequests.CHECK_LOGIN);
-        query.setParameter(ColumnNames.USERS_LOGIN, login);
-        List list = query.list();
-        if (!list.isEmpty())
-            isNew = false;
-        return isNew;
+    public static String checkRole(String login) throws ServiceException {
+        try {
+            UserDAO userDAO = new UserDAO();
+            User user = userDAO.getUserByLogin(login);
+            String roleString = user.getRole().getRole();
+            return roleString;
+        } catch (DAOException e) {
+            logger.writeLog("UserService checkRole error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public static User getUserByLogin(String login) throws ServiceException {
+        UserDAO userDAO = new UserDAO();
+        try {
+            return userDAO.getUserByLogin(login);
+        } catch (DAOException e) {
+            logger.writeLog("UserService getUserByLogin error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public static boolean isNewUser(String login) throws ServiceException {
+        try {
+            boolean isNew = true;
+            UserDAO userDAO = new UserDAO();
+            User user = userDAO.getUserByLogin(login);
+            if (user == null)
+                isNew = false;
+            return isNew;
+        } catch (DAOException e) {
+            logger.writeLog("UserService isUserNew error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
     }
 }
