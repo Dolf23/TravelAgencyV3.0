@@ -1,42 +1,28 @@
 package by.it_academy.agency.dao;
 
-
 import by.it_academy.agency.beans.ActionType;
 import by.it_academy.agency.constants.ColumnNames;
-import by.it_academy.agency.constants.SQLRequests;
+import by.it_academy.agency.exceptions.DAOException;
+import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.utils.HibernateUtil;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.List;
+public class ActionTypeDAO extends AbstractDAO<ActionType> {
 
-public enum ActionTypeDAO implements DAO<ActionType> {
-    INSTANCE;
-
-    @Override
-    public List<ActionType> getAll() {
-        Session session = HibernateUtil.getSession();
-        List<ActionType> list = session.createQuery(SQLRequests.GET_ALL_ACTION_TYPES).list();
-        return list;
-    }
-
-    @Override
-    public void createEntity(ActionType actionType) {
-    }
-
-    @Override
-    public ActionType getEntityByID(int id) {
-        Session session = HibernateUtil.getSession();
-        ActionType actionType = (ActionType) session.get(ActionType.class, id);
-        return actionType;
-    }
-
-    public ActionType getEntityByActionType(String actionType) {
-        Session session = HibernateUtil.getSession();
-        Criteria criteria = session.createCriteria(ActionType.class);
-        criteria.add(Restrictions.eq(ColumnNames.ACTION_TYPES_ACTION_TYPE, actionType));
-        ActionType actionTypeOut = (ActionType) criteria.uniqueResult();
+    public ActionType getEntityByActionType(String actionType) throws DAOException {
+        ActionType actionTypeOut;
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(ActionType.class);
+            criteria.add(Restrictions.eq(ColumnNames.ACTION_TYPES_ACTION_TYPE, actionType));
+            actionTypeOut = (ActionType) criteria.uniqueResult();
+        } catch (HibernateException e) {
+            logger.writeLog("Get entity by action type error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
         return actionTypeOut;
     }
 }

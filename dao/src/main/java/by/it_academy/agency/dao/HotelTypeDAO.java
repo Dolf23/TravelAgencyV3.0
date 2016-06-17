@@ -2,41 +2,27 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.HotelType;
 import by.it_academy.agency.constants.ColumnNames;
-import by.it_academy.agency.constants.SQLRequests;
+import by.it_academy.agency.exceptions.DAOException;
+import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.utils.HibernateUtil;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.List;
+public class HotelTypeDAO extends AbstractDAO<HotelType> {
 
-public enum HotelTypeDAO implements DAO<HotelType> {
-    INSTANCE;
-
-    @Override
-    public List<HotelType> getAll() {
-        Session session = HibernateUtil.getSession();
-        List<HotelType> list = session.createQuery(SQLRequests.GET_ALL_HOTEL_TYPES).list();
-        return list;
-    }
-
-    @Override
-    public void createEntity(HotelType hotelType) {
-
-    }
-
-    @Override
-    public HotelType getEntityByID(int id) {
-        Session session = HibernateUtil.getSession();
-        HotelType hotelType = (HotelType) session.get(HotelType.class, id);
-        return hotelType;
-    }
-
-    public HotelType getEntityByHotelType(String hotelType) {
-        Session session = HibernateUtil.getSession();
-        Criteria criteria = session.createCriteria(HotelType.class);
-        criteria.add(Restrictions.eq(ColumnNames.HOTEL_TYPES_HOTEL_TYPE, hotelType));
-        HotelType hotelTypeOut = (HotelType) criteria.uniqueResult();
+    public HotelType getEntityByHotelType(String hotelType) throws DAOException {
+        HotelType hotelTypeOut;
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(HotelType.class);
+            criteria.add(Restrictions.eq(ColumnNames.HOTEL_TYPES_HOTEL_TYPE, hotelType));
+            hotelTypeOut = (HotelType) criteria.uniqueResult();
+        } catch (HibernateException e) {
+            logger.writeLog("HotelTypeDAO getEntityByHotelType error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
         return hotelTypeOut;
     }
 }

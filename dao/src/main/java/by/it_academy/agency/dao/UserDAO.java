@@ -1,30 +1,40 @@
 package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.User;
-import by.it_academy.agency.constants.SQLRequests;
+import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.exceptions.DAOException;
+import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.utils.HibernateUtil;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
-import java.util.List;
-
-public enum UserDAO implements DAO<User> {
-    INSTANCE;
-
-    @Override
-    public List<User> getAll() {
-        Session session = HibernateUtil.getSession();
-        return session.createQuery(SQLRequests.GET_ALL_USERS).list();
+public class UserDAO extends AbstractDAO<User> {
+    public User getUserByLoginAndPassword(String login, String password) throws DAOException {
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(User.class);
+            criteria.add(Restrictions.eq(ColumnNames.USERS_LOGIN, login));
+            criteria.add(Restrictions.eq(ColumnNames.USERS_PASSWORD, password));
+            User user = (User) criteria.uniqueResult();
+            return user;
+        } catch (HibernateException e) {
+            logger.writeLog("UserDAO getUserByLoginAndPassword error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
     }
 
-    @Override
-    public void createEntity(User user) {
-        Session session = HibernateUtil.getSession();
-        session.save(user);
-    }
-
-    @Override
-    public User getEntityByID(int id) {
-        Session session = HibernateUtil.getSession();
-        return (User) session.get(User.class, id);
+    public User getUserByLogin(String login) throws DAOException {
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(User.class);
+            criteria.add(Restrictions.eq(ColumnNames.USERS_LOGIN, login));
+            User user = (User) criteria.uniqueResult();
+            return user;
+        } catch (HibernateException e) {
+            logger.writeLog("UserDAO getUserByLogin error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
     }
 }
