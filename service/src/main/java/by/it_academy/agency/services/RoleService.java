@@ -42,7 +42,7 @@ public class RoleService implements IService<Role> {
         }
     }
 
-    public Role getIdByRole(String role) throws ServiceException {
+    public Role getEntityByRole(String role) throws ServiceException {
         try {
             return roleDAO.getEntityByRole(role);
         } catch (DAOException e) {

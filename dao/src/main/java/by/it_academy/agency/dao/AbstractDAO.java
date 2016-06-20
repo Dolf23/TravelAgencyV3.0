@@ -8,10 +8,11 @@ import org.hibernate.HibernateException;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class AbstractDAO<TYPE> implements DAO<TYPE> {
+public abstract class AbstractDAO<T> implements DAO<T> {
+
     @Override
-    public List<TYPE> getAll() throws DAOException {
-        List<TYPE> list;
+    public List<T> getAll() throws DAOException {
+        List<T> list;
         try {
             list = HibernateUtil.getSession().createCriteria(getTypeClass()).list();
         } catch (HibernateException e) {
@@ -22,7 +23,7 @@ public abstract class AbstractDAO<TYPE> implements DAO<TYPE> {
     }
 
     @Override
-    public void createEntity(TYPE type) throws DAOException {
+    public void createEntity(T type) throws DAOException {
         try {
             HibernateUtil.getSession().save(type);
         } catch (HibernateException e) {
@@ -32,10 +33,11 @@ public abstract class AbstractDAO<TYPE> implements DAO<TYPE> {
     }
 
     @Override
-    public TYPE getEntityByID(int id) throws DAOException {
-        TYPE entity;
+    public T getEntityByID(int id) throws DAOException {
+        T entity;
         try {
-            entity = (TYPE) HibernateUtil.getSession().get(getTypeClass(), id);
+            System.out.println(getTypeClass());
+            entity = (T) HibernateUtil.getSession().get(getTypeClass(), id);
         } catch (HibernateException e) {
             logger.writeLog("Find entity error:" + e.getMessage());
             throw new DAOException(e.getMessage());
@@ -45,6 +47,6 @@ public abstract class AbstractDAO<TYPE> implements DAO<TYPE> {
 
 
     private Class getTypeClass() {
-        return (Class<TYPE>) ((ParameterizedType) getTypeClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }

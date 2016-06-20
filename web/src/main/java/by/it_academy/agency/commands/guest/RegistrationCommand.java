@@ -33,9 +33,9 @@ public class RegistrationCommand extends AbstractCommand {
         try {
             RoleService roleService = new RoleService();
             if (null != request.getParameter(Parameters.ROLE))
-                fkRole = roleService.getIdByRole(Parameters.ADMIN).getId();
+                fkRole = roleService.getEntityByRole(Parameters.ADMIN).getId();
             else
-                fkRole = roleService.getIdByRole(Parameters.USER).getId();
+                fkRole = roleService.getEntityByRole(Parameters.USER).getId();
 
             if (areFieldsFull()) {
                 if (UserService.isNewUser(login)) {
@@ -72,7 +72,7 @@ public class RegistrationCommand extends AbstractCommand {
         return is;
     }
 
-    private void registration(int role) throws ServiceException {
+    private void registration(int roleId) throws ServiceException {
         User user = new User();
         user.setName(name);
         user.setSurname(surname);
@@ -80,7 +80,7 @@ public class RegistrationCommand extends AbstractCommand {
         user.setLogin(login);
         user.setPassword(password);
         RoleService roleService = new RoleService();
-        user.setRole(roleService.getIdByRole("" + role));
+        user.setRole(roleService.getById(roleId));
         new UserService().add(user);
     }
 

@@ -11,6 +11,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 public class UserDAO extends AbstractDAO<User> {
+
+
     public User getUserByLoginAndPassword(String login, String password) throws DAOException {
         try {
             Session session = HibernateUtil.getSession();

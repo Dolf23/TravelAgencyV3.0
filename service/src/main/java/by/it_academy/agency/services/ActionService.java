@@ -9,7 +9,6 @@ import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.utils.HibernateUtil;
 import org.hibernate.Session;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +74,7 @@ public class ActionService implements IService<Action> {
         }
     }
 
-    public static void deleteAction(User user, int idAction) throws SQLException {
+    public static void deleteAction(User user, int idAction) throws ServiceException {
         /*Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SQLRequests.DELETE_ACTION_BY_USER_AND_TOUR);
         statement.setInt(1, user.getId());

@@ -94,7 +94,7 @@ public class UserService implements IService<User> {
             boolean isNew = true;
             UserDAO userDAO = new UserDAO();
             User user = userDAO.getUserByLogin(login);
-            if (user == null)
+            if (user != null)
                 isNew = false;
             return isNew;
         } catch (DAOException e) {

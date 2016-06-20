@@ -10,8 +10,8 @@
 
         <property name="role"/>
 
-        <set name="users" table="users" inverse="true" lazy="true" fetch="select">
-            <key column="user_id" not-null="true"></key>
+        <set name="users" table="user" inverse="true" lazy="true" fetch="select">
+            <key column="id" not-null="true"></key>
             <one-to-many class="Tour"/>
         </set>
     </class>
