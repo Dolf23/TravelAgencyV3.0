@@ -36,7 +36,6 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     public T getEntityByID(int id) throws DAOException {
         T entity;
         try {
-            System.out.println(getTypeClass());
             entity = (T) HibernateUtil.getSession().get(getTypeClass(), id);
         } catch (HibernateException e) {
             logger.writeLog("Find entity error:" + e.getMessage());
