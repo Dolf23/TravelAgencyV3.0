@@ -14,6 +14,6 @@
         <many-to-one name="tourType" class="TourType"/>
         <many-to-one name="transport" class="Transport"/>
         <many-to-one name="hotelType" class="HotelType"/>
-        <many-to-one name="foodComplex" class="HotelType"/>
+        <many-to-one name="foodComplex" class="FoodComplex"/>
     </class>
 </hibernate-mapping>

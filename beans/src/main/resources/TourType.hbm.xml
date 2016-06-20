@@ -10,8 +10,8 @@
 
         <property name="tourType"/>
 
-        <set name="tours" table="tours" inverse="true" lazy="true" fetch="select">
-            <key column="tour_type_id" not-null="true"></key>
+        <set name="tours" table="tour" inverse="true" lazy="true" fetch="select">
+            <key column="id" not-null="true"></key>
             <one-to-many class="Tour"/>
         </set>
     </class>

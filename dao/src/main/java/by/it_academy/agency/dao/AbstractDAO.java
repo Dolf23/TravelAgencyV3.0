@@ -14,7 +14,7 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     public List<T> getAll() throws DAOException {
         List<T> list;
         try {
-            list = HibernateUtil.getSession().createCriteria(getTypeClass()).list();
+            list = (List<T>) HibernateUtil.getSession().createCriteria(getTypeClass()).list();
         } catch (HibernateException e) {
             logger.writeLog("Get all entities error:" + e.getMessage());
             throw new DAOException(e.getMessage());

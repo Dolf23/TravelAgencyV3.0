@@ -19,7 +19,7 @@ public class FoodComplex extends Entity {
 
     @Override
     public String toString() {
-        return "Food comlex [id=" + id + ", Food complex=" + foodComplex + "]";
+        return "Food complex [id=" + id + ", Food complex=" + foodComplex + "]";
     }
 
     @Override
