@@ -40,4 +40,18 @@ public class TourDAO extends AbstractDAO<Tour> {
             throw new DAOException(e.getMessage());
         }
     }
+
+    public List<Tour> getToursWithLimit(int start, int size) throws DAOException {
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(Tour.class);
+            criteria.setFirstResult(start);
+            criteria.setMaxResults(size);
+            List<Tour> list = criteria.list();
+            return list;
+        } catch (HibernateException e) {
+            logger.writeLog("TourDAO  getToursWithLimit error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+    }
 }

@@ -113,14 +113,18 @@ public class TourService implements IService<Tour> {
         }
     }
 
-    public Map<Integer, String> getAllToursMap() throws ServiceException {
-        List<Tour> list = getAll();
-        Map<Integer, String> map = new HashMap<>();
-
-        for (Tour tour : list) {
-            int idTour = tour.getId();
-            map.put(idTour, convertTourToString(idTour));
+    public Map<Integer, String> getToursMapLimit(int startPage, int sizePage) throws ServiceException {
+        try {
+            List<Tour> list = tourDAO.getToursWithLimit(startPage, sizePage);
+            Map<Integer, String> map = new HashMap<>();
+            for (Tour tour : list) {
+                int idTour = tour.getId();
+                map.put(idTour, convertTourToString(idTour));
+            }
+            return map;
+        } catch (DAOException e) {
+            logger.writeLog("TourService getToursMapLimit error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
-        return map;
     }
 }

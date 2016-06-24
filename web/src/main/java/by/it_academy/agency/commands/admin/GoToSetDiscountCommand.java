@@ -18,7 +18,7 @@ public class GoToSetDiscountCommand extends AbstractCommand {
         String page;
         try {
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ADMIN_SET_DISCOUNT_PAGE_PATH);
-            request.setAttribute(Parameters.TOURS_MAP, new TourService().getAllToursMap());
+            request.setAttribute(Parameters.TOURS_MAP, new TourService().getToursMapLimit(5, 10)); //todo
         } catch (ServiceException e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);
