@@ -26,7 +26,8 @@ public class CancelReservationCommand extends AbstractCommand {
                 User user = (User) session.getAttribute(Parameters.USER);
 
                 int idTour = Integer.parseInt(idTourString);
-                ActionService.deleteAction(user, idTour);
+                ActionService actionService = new ActionService();
+                actionService.deleteAction(user, idTour);
 
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.USER_PAGE_PATH);
                 request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.CANCEL_RESERVING));

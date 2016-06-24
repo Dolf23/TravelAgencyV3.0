@@ -26,4 +26,27 @@ public class ActionDAO extends AbstractDAO<Action> {
             throw new DAOException(e.getMessage());
         }
     }
+
+    public Action getActionByUserAndTour(int idUser, int idTour) throws DAOException {
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(Action.class);
+            criteria.add(Restrictions.eq(ColumnNames.ACTIONS_FK_USER + "." + ColumnNames.USERS_ID, idUser));
+            criteria.add(Restrictions.eq(ColumnNames.ACTIONS_FK_TOUR + "." + ColumnNames.TOURS_ID, idTour));
+            Action action = (Action) criteria.uniqueResult();
+            return action;
+        } catch (HibernateException e) {
+            logger.writeLog("ActionDAO getActionByUserAndTour error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+    }
+
+    public void delete(Action action) throws DAOException {
+        try {
+            HibernateUtil.getSession().delete(action);
+        } catch (HibernateException e) {
+            logger.writeLog("ActionDAO delete error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+    }
 }

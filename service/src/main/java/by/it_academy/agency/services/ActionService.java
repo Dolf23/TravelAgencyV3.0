@@ -74,13 +74,19 @@ public class ActionService implements IService<Action> {
         }
     }
 
-    public static void deleteAction(User user, int idAction) throws ServiceException {
-        /*Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQLRequests.DELETE_ACTION_BY_USER_AND_TOUR);
-        statement.setInt(1, user.getId());
-        statement.setInt(2, idAction);
-        statement.executeUpdate();
-        ConnectionPool.INSTANCE.releaseConnection(connection);*/
-        //TODO
+    public void deleteAction(User user, int idTour) throws ServiceException {
+        Session session = null;
+        try {
+            ActionDAO actionDAO = new ActionDAO();
+            Action action = actionDAO.getActionByUserAndTour(user.getId(), idTour);
+            session = HibernateUtil.getSession();
+            session.beginTransaction();
+            actionDAO.delete(action);
+            session.getTransaction().commit();
+        } catch (DAOException e) {
+            logger.writeLog("ActionService deleteActions error:" + e.getMessage());
+            session.getTransaction().rollback();
+            throw new ServiceException(e.getMessage());
+        }
     }
 }
