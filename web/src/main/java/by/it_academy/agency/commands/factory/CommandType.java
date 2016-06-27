@@ -3,6 +3,7 @@ package by.it_academy.agency.commands.factory;
 import by.it_academy.agency.commands.Command;
 import by.it_academy.agency.commands.admin.*;
 import by.it_academy.agency.commands.guest.*;
+import by.it_academy.agency.commands.pagination.UpdatePagination;
 import by.it_academy.agency.commands.user.*;
 
 public enum CommandType {
@@ -13,7 +14,10 @@ public enum CommandType {
     GO_TO_MAIN_USER, GO_TO_SELECT_TOUR, SELECT_TOUR, RESERVE, GO_TO_RESERVED_TOURS, CANCEL_RESERVATION,
 
     //admin command
-    GO_TO_MAIN_ADMIN, GO_TO_CREATE_TOUR, CREATE_TOUR, GO_TO_SET_DISCOUNT, SET_DISCOUNT;
+    GO_TO_MAIN_ADMIN, GO_TO_CREATE_TOUR, CREATE_TOUR, GO_TO_SET_DISCOUNT, SET_DISCOUNT,
+
+    //pagination
+    UPDATE_PAGINATION;
 
     public Command getCurrentCommand() {
         switch (this) {
@@ -64,6 +68,9 @@ public enum CommandType {
 
             case SET_DISCOUNT:
                 return new SetDiscountCommand();
+
+            case UPDATE_PAGINATION:
+                return new UpdatePagination();
 
             default:
                 throw new EnumConstantNotPresentException(this.getDeclaringClass(), this.name());

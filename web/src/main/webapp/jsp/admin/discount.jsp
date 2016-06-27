@@ -20,6 +20,10 @@
             </div>
         </div>
 
+        <div class="form-group" align="center">
+            <%@ include file="../pagination/pagination.jsp" %>
+        </div>
+
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="amountDiscount">Amount of discount</label>

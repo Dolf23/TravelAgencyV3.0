@@ -35,4 +35,11 @@ public class Parameters {
     public static final String ERROR_USER_EXISTS = "errorUserExists";
     public static final String OPERATION_MESSAGE = "operationMessage";
     public static final String ERROR_TOUR_LIST_IS_EMPTY = "errorListIsEmpty";
+
+    public static final String PAGINATION_MENU = "paginationMenu";
+    public static final String TOTAL_PAGES_QUANTITY = "totalQuantity";
+    public static final String QUANTITY_PER_PAGE = "quantityPerPage";
+    public static final String COUNT_TOURS_PER_PAGE = "countToursPerPage";
+    public static final String SELECTED_PAGE = "page";
+    public static final String GAP_IN_PAGE_MENU = "gap";
 }

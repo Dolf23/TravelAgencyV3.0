@@ -127,4 +127,13 @@ public class TourService implements IService<Tour> {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public int getCountTours() throws ServiceException {
+        try {
+            return tourDAO.getCountTours();
+        } catch (DAOException e) {
+            logger.writeLog("TourService getCountTours error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

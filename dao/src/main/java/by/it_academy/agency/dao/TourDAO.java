@@ -8,6 +8,7 @@ import by.it_academy.agency.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
@@ -51,6 +52,18 @@ public class TourDAO extends AbstractDAO<Tour> {
             return list;
         } catch (HibernateException e) {
             logger.writeLog("TourDAO  getToursWithLimit error:" + e.getMessage());
+            throw new DAOException(e.getMessage());
+        }
+    }
+
+    public int getCountTours() throws DAOException {
+        try {
+            Session session = HibernateUtil.getSession();
+            Criteria criteria = session.createCriteria(Tour.class);
+            criteria.setProjection(Projections.countDistinct(ColumnNames.TOURS_ID));
+            return (int) criteria.uniqueResult();
+        } catch (HibernateException e) {
+            logger.writeLog("TourDAO  getCountTours:" + e.getMessage());
             throw new DAOException(e.getMessage());
         }
     }
