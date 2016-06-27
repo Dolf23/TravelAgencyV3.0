@@ -26,9 +26,9 @@ public class UpdatePagination extends AbstractCommand {
             String selectedPageString = request.getParameter(Parameters.SELECTED_PAGE);
             if (quantityPerPageString != null) {
                 quantityPerPage = Integer.parseInt(quantityPerPageString);
-                request.setAttribute(Parameters.COUNT_TOURS_PER_PAGE, quantityPerPage);
+                request.getSession().setAttribute(Parameters.COUNT_TOURS_PER_PAGE, quantityPerPage);
             } else {
-                quantityPerPage = (int) request.getAttribute(Parameters.COUNT_TOURS_PER_PAGE);
+                quantityPerPage = (int) request.getSession().getAttribute(Parameters.COUNT_TOURS_PER_PAGE);
             }
             if (selectedPageString != null) {
                 selectedPage = Integer.parseInt(selectedPageString);
@@ -38,6 +38,7 @@ public class UpdatePagination extends AbstractCommand {
 
             request.setAttribute(Parameters.TOURS_MAP, new TourService().getToursMapLimit(selectedPage, quantityPerPage));
             request.setAttribute(Parameters.PAGINATION_MENU, new Pagination().getPaginationMenu(selectedPage, quantityPerPage));
+
         } catch (Exception e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ERROR_PAGE_PATH);

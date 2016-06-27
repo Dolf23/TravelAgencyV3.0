@@ -19,7 +19,8 @@ public class GoToSetDiscountCommand extends AbstractCommand {
         String page;
         try {
             page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ADMIN_SET_DISCOUNT_PAGE_PATH);
-            request.setAttribute(Parameters.COUNT_TOURS_PER_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE);
+            //request.setAttribute(Parameters.COUNT_TOURS_PER_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE);
+            request.getSession().setAttribute(Parameters.COUNT_TOURS_PER_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE);
             request.setAttribute(Parameters.TOURS_MAP, new TourService().getToursMapLimit(DefaultValue.START_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE));
             request.setAttribute(Parameters.PAGINATION_MENU, new Pagination().getPaginationMenu(DefaultValue.START_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE));
         } catch (Exception e) {
