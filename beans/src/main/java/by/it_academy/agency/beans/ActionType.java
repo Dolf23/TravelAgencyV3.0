@@ -6,7 +6,7 @@ public class ActionType extends Entity{
     private int id;
     private String actionType;
 
-    private Set<Tour> tours;
+    private Set<Tour> actions;
 
     @Override
     public int hashCode() {
@@ -65,11 +65,11 @@ public class ActionType extends Entity{
         this.actionType = actionType;
     }
 
-    public Set<Tour> getTours() {
-        return tours;
+    public Set<Tour> getActions() {
+        return actions;
     }
 
-    public void setTours(Set<Tour> tours) {
-        this.tours = tours;
+    public void setActions(Set<Tour> tours) {
+        this.actions = tours;
     }
 }

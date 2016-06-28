@@ -10,10 +10,14 @@
         <property name="cost"/>
         <property name="discount"/>
 
-        <many-to-one name="country" class="Country"/>
-        <many-to-one name="tourType" class="TourType"/>
-        <many-to-one name="transport" class="Transport"/>
-        <many-to-one name="hotelType" class="HotelType"/>
-        <many-to-one name="foodComplex" class="FoodComplex"/>
+        <many-to-one name="country" class="Country" column="countryId"/>
+        <many-to-one name="tourType" class="TourType" column="tourTypeId"/>
+        <many-to-one name="transport" class="Transport" column="transportId"/>
+        <many-to-one name="hotelType" class="HotelType" column="hotelTypeId"/>
+        <many-to-one name="foodComplex" class="FoodComplex" column="foodComplexId"/>
+        <set name="actions" table="action" inverse="true" lazy="true" fetch="select">
+            <key column="tourId" not-null="true"></key>
+            <one-to-many class="Action"/>
+        </set>
     </class>
 </hibernate-mapping>

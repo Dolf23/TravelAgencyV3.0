@@ -1,5 +1,7 @@
 package by.it_academy.agency.beans;
 
+import java.util.Set;
+
 public class User extends Entity {
     private int id;
     private String name;
@@ -9,6 +11,7 @@ public class User extends Entity {
     private String password;
 
     private Role role;
+    private Set<Action> actions;
 
     @Override
     public int hashCode() {
@@ -153,5 +156,13 @@ public class User extends Entity {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<Action> getActions() {
+        return actions;
+    }
+
+    public void setActions(Set<Action> actions) {
+        this.actions = actions;
     }
 }

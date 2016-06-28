@@ -11,7 +11,7 @@
         <property name="foodComplex"/>
 
         <set name="tours" table="tour" inverse="true" lazy="true" fetch="select">
-            <key column="id" not-null="true"></key>
+            <key column="foodComplexId" not-null="true"></key>
             <one-to-many class="Tour"/>
         </set>
     </class>

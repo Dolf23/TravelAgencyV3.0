@@ -1,5 +1,7 @@
 package by.it_academy.agency.beans;
 
+import java.util.Set;
+
 public class Tour extends Entity {
     private int id;
     private int cost;
@@ -10,6 +12,7 @@ public class Tour extends Entity {
     private Transport transport;
     private HotelType hotelType;
     private FoodComplex foodComplex;
+    private Set<Action> actions;
 
 
     @Override
@@ -147,5 +150,13 @@ public class Tour extends Entity {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public Set<Action> getActions() {
+        return actions;
+    }
+
+    public void setActions(Set<Action> actions) {
+        this.actions = actions;
     }
 }

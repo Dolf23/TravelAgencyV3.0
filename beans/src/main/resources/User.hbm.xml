@@ -13,6 +13,10 @@
         <property name="password"/>
         <property name="email"/>
 
-        <many-to-one name="role" class="Role"/>
+        <many-to-one name="role" class="Role" column="roleId"/>
+        <set name="actions" table="action" inverse="true" lazy="true" fetch="select">
+            <key column="userId" not-null="true"></key>
+            <one-to-many class="Action"/>
+        </set>
     </class>
 </hibernate-mapping>

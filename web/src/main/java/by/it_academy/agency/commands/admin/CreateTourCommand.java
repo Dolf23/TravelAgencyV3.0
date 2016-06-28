@@ -58,13 +58,14 @@ public class CreateTourCommand extends AbstractCommand {
 
     private int getIdCountry(String country) throws ServiceException {
         CountryService countryService = new CountryService();
-        int id = countryService.getEntityByCountry(country).getId();
-        if (0 == id) {
-            Country entity = new by.it_academy.agency.beans.Country();
-            entity.setCountry(country);
-            new CountryService().add(entity);
-            id = countryService.getEntityByCountry(country).getId();
+        Country countryObj = countryService.getEntityByCountry(country);
+        int id;
+        if (countryObj == null) {
+            countryObj = new Country();
+            countryObj.setCountry(country);
+            countryService.add(countryObj);
         }
+        id = countryService.getEntityByCountry(country).getId();
         return id;
     }
 

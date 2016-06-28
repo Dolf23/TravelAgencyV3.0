@@ -11,8 +11,8 @@
         <property name="role"/>
 
         <set name="users" table="user" inverse="true" lazy="true" fetch="select">
-            <key column="id" not-null="true"></key>
-            <one-to-many class="Tour"/>
+            <key column="roleId" not-null="true"></key>
+            <one-to-many class="User"/>
         </set>
     </class>
 </hibernate-mapping>

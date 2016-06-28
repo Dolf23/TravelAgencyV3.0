@@ -8,8 +8,8 @@
             <generator class="native"/>
         </id>
 
-        <many-to-one name="actionType" class="ActionType"/>
-        <many-to-one name="user" class="User"/>
-        <many-to-one name="tour" class="Tour"/>
+        <many-to-one name="actionType" class="ActionType" column="actionTypeId"/>
+        <many-to-one name="user" class="User" column="userId"/>
+        <many-to-one name="tour" class="Tour" column="tourId"/>
     </class>
 </hibernate-mapping>
