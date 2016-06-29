@@ -14,7 +14,6 @@ public class Pagination {
         try {
             TourService tourService = new TourService();
             int countTours = tourService.getCountTours();
-//            int countTours = 1285;
             List<String> list = new ArrayList<>();
 
             int countPages;

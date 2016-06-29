@@ -36,7 +36,8 @@ public class UpdatePagination extends AbstractCommand {
                 selectedPage = 1;
             }
 
-            request.setAttribute(Parameters.TOURS_MAP, new TourService().getToursMapLimit(selectedPage, quantityPerPage));
+
+            request.setAttribute(Parameters.TOURS_MAP, new TourService().getToursMapLimit((selectedPage - 1) * quantityPerPage, quantityPerPage));
             request.setAttribute(Parameters.PAGINATION_MENU, new Pagination().getPaginationMenu(selectedPage, quantityPerPage));
 
         } catch (Exception e) {

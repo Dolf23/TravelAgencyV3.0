@@ -61,7 +61,8 @@ public class TourDAO extends AbstractDAO<Tour> {
             Session session = HibernateUtil.getSession();
             Criteria criteria = session.createCriteria(Tour.class);
             criteria.setProjection(Projections.countDistinct(ColumnNames.TOURS_ID));
-            return (int) criteria.uniqueResult();
+            long count = (long) criteria.uniqueResult();
+            return (int) count;
         } catch (HibernateException e) {
             logger.writeLog("TourDAO  getCountTours:" + e.getMessage());
             throw new DAOException(e.getMessage());

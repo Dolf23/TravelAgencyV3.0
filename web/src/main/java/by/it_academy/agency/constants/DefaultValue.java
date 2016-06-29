@@ -1,6 +1,7 @@
 package by.it_academy.agency.constants;
 
 public class DefaultValue {
+    public static final int START_RECORD = 0;
     public static final int START_PAGE = 1;
     public static final int COUNT_RECORDS_PER_PAGE = 10;
 

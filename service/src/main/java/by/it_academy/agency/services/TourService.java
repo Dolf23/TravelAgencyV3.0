@@ -113,9 +113,9 @@ public class TourService implements IService<Tour> {
         }
     }
 
-    public Map<Integer, String> getToursMapLimit(int startPage, int sizePage) throws ServiceException {
+    public Map<Integer, String> getToursMapLimit(int startRecord, int sizePage) throws ServiceException {
         try {
-            List<Tour> list = tourDAO.getToursWithLimit(startPage, sizePage);
+            List<Tour> list = tourDAO.getToursWithLimit(startRecord, sizePage);
             Map<Integer, String> map = new HashMap<>();
             for (Tour tour : list) {
                 int idTour = tour.getId();
