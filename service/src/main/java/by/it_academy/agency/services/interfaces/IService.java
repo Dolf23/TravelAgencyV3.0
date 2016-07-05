@@ -1,4 +1,4 @@
-package by.it_academy.agency.services;
+package by.it_academy.agency.services.interfaces;
 
 import by.it_academy.agency.beans.Entity;
 import by.it_academy.agency.exceptions.ServiceException;
