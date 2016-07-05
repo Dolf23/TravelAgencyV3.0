@@ -9,8 +9,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ActionTypeDAO extends AbstractDAO<ActionType> {
+
+    @Autowired
     private ActionTypeDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

@@ -9,9 +9,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class RoleDAO extends AbstractDAO<Role> {
+
+    @Autowired
     private RoleDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

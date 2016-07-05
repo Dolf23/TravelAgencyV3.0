@@ -10,8 +10,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class FoodComplexDAO extends AbstractDAO<FoodComplex> {
+
+    @Autowired
     private FoodComplexDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
