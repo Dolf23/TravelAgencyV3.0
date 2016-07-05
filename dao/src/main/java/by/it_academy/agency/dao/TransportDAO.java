@@ -2,6 +2,7 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Transport;
 import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.dao.interfaces.ITransportDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
 import org.hibernate.Criteria;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransportDAO extends AbstractDAO<Transport> {
+public class TransportDAO extends AbstractDAO<Transport> implements ITransportDAO {
 
     @Autowired
     private TransportDAO(SessionFactory sessionFactory) {

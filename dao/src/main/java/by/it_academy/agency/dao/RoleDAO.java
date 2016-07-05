@@ -2,6 +2,7 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Role;
 import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.dao.interfaces.IRoleDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
 import org.hibernate.Criteria;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RoleDAO extends AbstractDAO<Role> {
+public class RoleDAO extends AbstractDAO<Role> implements IRoleDAO {
 
     @Autowired
     private RoleDAO(SessionFactory sessionFactory) {

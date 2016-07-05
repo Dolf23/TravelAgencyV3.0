@@ -2,6 +2,7 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.HotelType;
 import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.dao.interfaces.IHotelTypeDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
 import org.hibernate.Criteria;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HotelTypeDAO extends AbstractDAO<HotelType> {
+public class HotelTypeDAO extends AbstractDAO<HotelType> implements IHotelTypeDAO {
 
     @Autowired
     private HotelTypeDAO(SessionFactory sessionFactory) {

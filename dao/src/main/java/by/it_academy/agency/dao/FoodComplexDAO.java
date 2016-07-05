@@ -3,6 +3,7 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.FoodComplex;
 import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.dao.interfaces.IFoodComplexDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
 import org.hibernate.Criteria;
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FoodComplexDAO extends AbstractDAO<FoodComplex> {
+public class FoodComplexDAO extends AbstractDAO<FoodComplex> implements IFoodComplexDAO {
 
     @Autowired
     private FoodComplexDAO(SessionFactory sessionFactory) {

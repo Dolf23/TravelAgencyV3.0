@@ -2,6 +2,7 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Country;
 import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.dao.interfaces.ICountryDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
 import org.hibernate.Criteria;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CountryDAO extends AbstractDAO<Country> {
+public class CountryDAO extends AbstractDAO<Country> implements ICountryDAO {
 
     @Autowired
     private CountryDAO(SessionFactory sessionFactory) {

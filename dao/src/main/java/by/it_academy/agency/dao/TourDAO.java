@@ -2,6 +2,7 @@ package by.it_academy.agency.dao;
 
 import by.it_academy.agency.beans.Tour;
 import by.it_academy.agency.constants.ColumnNames;
+import by.it_academy.agency.dao.interfaces.ITourDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
 import org.hibernate.Criteria;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class TourDAO extends AbstractDAO<Tour> {
+public class TourDAO extends AbstractDAO<Tour> implements ITourDAO {
 
     @Autowired
     private TourDAO(SessionFactory sessionFactory) {
