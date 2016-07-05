@@ -4,20 +4,23 @@ import by.it_academy.agency.beans.Tour;
 import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
-import by.it_academy.agency.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
 public class TourDAO extends AbstractDAO<Tour> {
+    private TourDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void updateEntity(Tour tour) throws DAOException {
         try {
-            Session session = HibernateUtil.getSession();
+            Session session = currentSession();
             session.update(tour);
         } catch (HibernateException e) {
             logger.writeLog("TourDAO  updateEntity error:" + e.getMessage());
@@ -27,7 +30,7 @@ public class TourDAO extends AbstractDAO<Tour> {
 
     public List<Tour> getToursByRequest(int tourType, int country, int transport, int hotelType, int foodComplex) throws DAOException {
         try {
-            Session session = HibernateUtil.getSession();
+            Session session = currentSession();
             Criteria criteria = session.createCriteria(Tour.class);
             criteria.add(Restrictions.eq(ColumnNames.TOURS_FK_TOUR_TYPE + "." + ColumnNames.TOUR_TYPES_ID, tourType));
             criteria.add(Restrictions.eq(ColumnNames.TOURS_FK_COUNTRY + "." + ColumnNames.COUNTRIES_ID, country));
@@ -44,7 +47,7 @@ public class TourDAO extends AbstractDAO<Tour> {
 
     public List<Tour> getToursWithLimit(int start, int size) throws DAOException {
         try {
-            Session session = HibernateUtil.getSession();
+            Session session = currentSession();
             Criteria criteria = session.createCriteria(Tour.class);
             criteria.setFirstResult(start);
             criteria.setMaxResults(size);
@@ -58,7 +61,7 @@ public class TourDAO extends AbstractDAO<Tour> {
 
     public int getCountTours() throws DAOException {
         try {
-            Session session = HibernateUtil.getSession();
+            Session session = currentSession();
             Criteria criteria = session.createCriteria(Tour.class);
             criteria.setProjection(Projections.countDistinct(ColumnNames.TOURS_ID));
             long count = (long) criteria.uniqueResult();

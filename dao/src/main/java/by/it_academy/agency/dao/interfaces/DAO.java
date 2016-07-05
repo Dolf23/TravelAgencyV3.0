@@ -1,4 +1,4 @@
-package by.it_academy.agency.dao;
+package by.it_academy.agency.dao.interfaces;
 
 
 import by.it_academy.agency.exceptions.DAOException;

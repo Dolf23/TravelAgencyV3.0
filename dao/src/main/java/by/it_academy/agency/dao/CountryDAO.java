@@ -4,18 +4,21 @@ import by.it_academy.agency.beans.Country;
 import by.it_academy.agency.constants.ColumnNames;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.logger.logger;
-import by.it_academy.agency.utils.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
 public class CountryDAO extends AbstractDAO<Country> {
+    private CountryDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public Country getEntityByCountry(String country) throws DAOException {
         Country countryOut;
         try {
-            Session session = HibernateUtil.getSession();
+            Session session = currentSession();
             Criteria criteria = session.createCriteria(Country.class);
             criteria.add(Restrictions.eq(ColumnNames.COUNTRIES_COUNTRY, country));
             countryOut = (Country) criteria.uniqueResult();
