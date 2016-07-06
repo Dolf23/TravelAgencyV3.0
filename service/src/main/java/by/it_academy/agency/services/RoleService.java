@@ -54,6 +54,7 @@ public class RoleService implements IRoleService {
         }
     }
 
+    @Override
     public Role getEntityByRole(String role) throws ServiceException {
         try {
             return dao.getEntityByRole(role);
