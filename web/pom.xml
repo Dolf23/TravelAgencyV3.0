@@ -18,18 +18,20 @@
 
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
         <dependency>
             <groupId>by.it_academy.TravelAgency</groupId>
             <artifactId>beans</artifactId>
             <version>1.0</version>
         </dependency>
+
         <dependency>
             <groupId>by.it_academy.TravelAgency</groupId>
             <artifactId>service</artifactId>

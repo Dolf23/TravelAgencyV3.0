@@ -9,8 +9,9 @@ import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.RoleService;
-import by.it_academy.agency.services.UserService;
+import by.it_academy.agency.services.interfaces.IRoleService;
+import by.it_academy.agency.services.interfaces.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +21,11 @@ public class RegistrationCommand extends AbstractCommand {
     private static String email;
     private static String login;
     private static String password;
+
+    @Autowired
+    private IUserService userService;
+    @Autowired
+    private IRoleService roleService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -31,14 +37,13 @@ public class RegistrationCommand extends AbstractCommand {
         password = request.getParameter(Parameters.PASSWORD);
         int fkRole;
         try {
-            RoleService roleService = new RoleService();
             if (null != request.getParameter(Parameters.ROLE))
                 fkRole = roleService.getEntityByRole(Parameters.ADMIN).getId();
             else
                 fkRole = roleService.getEntityByRole(Parameters.USER).getId();
 
             if (areFieldsFull()) {
-                if (UserService.isNewUser(login)) {
+                if (userService.isNewUser(login)) {
                     registration(fkRole);
                     page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.INDEX_PAGE_PATH);
                     request.setAttribute(Parameters.OPERATION_MESSAGE, MessageManager.INSTANCE.getProperty(MessageConstants.SUCCESS_REGISTRATION));
@@ -79,9 +84,8 @@ public class RegistrationCommand extends AbstractCommand {
         user.setEmail(email);
         user.setLogin(login);
         user.setPassword(password);
-        RoleService roleService = new RoleService();
         user.setRole(roleService.getById(roleId));
-        new UserService().add(user);
+        userService.add(user);
     }
 
 }

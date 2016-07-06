@@ -9,11 +9,17 @@ import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
 import by.it_academy.agency.services.TourService;
+import by.it_academy.agency.services.interfaces.ITourService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public class SelectTourCommand extends AbstractCommand {
+
+    @Autowired
+    private ITourService tourService;
+
     @Override
     public String execute(HttpServletRequest request) {
         String page;
@@ -24,7 +30,7 @@ public class SelectTourCommand extends AbstractCommand {
         int fk_foodComplex = Integer.parseInt(request.getParameter(Parameters.FOOD_COMPLEX));
 
         try {
-            Map<Integer, String> map = TourService.getMapToursByRequest(fk_tourType, fk_country, fk_transport, fk_hotelType, fk_foodComplex);
+            Map<Integer, String> map = tourService.getMapToursByRequest(fk_tourType, fk_country, fk_transport, fk_hotelType, fk_foodComplex);
             if (!map.isEmpty()) {
                 request.setAttribute(Parameters.TOURS_MAP, map);
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.USER_RESERVE_PAGE_PATH);

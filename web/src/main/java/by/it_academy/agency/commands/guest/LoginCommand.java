@@ -10,22 +10,28 @@ import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
 import by.it_academy.agency.services.UserService;
+import by.it_academy.agency.services.interfaces.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements Command {
+
+    @Autowired
+    private IUserService userService;
+
     @Override
     public String execute(HttpServletRequest request) {
         String login = request.getParameter(Parameters.LOGIN);
         String password = request.getParameter(Parameters.PASSWORD);
-        String page = null;
+        String page;
 
         try {
-            if (UserService.isAuthorized(login, password)) {
+            if (userService.isAuthorized(login, password)) {
                 HttpSession session = request.getSession();
-                User user = UserService.getUserByLogin(login);
-                String role = UserService.checkRole(login);
+                User user = userService.getUserByLogin(login);
+                String role = userService.checkRole(login);
                 session.setAttribute(Parameters.USER_ROLE, role);
                 session.setAttribute(Parameters.USER, user);
                 if (role.equals(Parameters.ADMIN))

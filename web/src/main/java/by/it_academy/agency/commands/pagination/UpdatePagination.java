@@ -7,12 +7,16 @@ import by.it_academy.agency.constants.Parameters;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.TourService;
+import by.it_academy.agency.services.interfaces.ITourService;
 import by.it_academy.agency.utils.Pagination;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class UpdatePagination extends AbstractCommand {
+
+    @Autowired
+    private ITourService tourService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -37,7 +41,7 @@ public class UpdatePagination extends AbstractCommand {
             }
 
 
-            request.setAttribute(Parameters.TOURS_MAP, new TourService().getToursMapLimit((selectedPage - 1) * quantityPerPage, quantityPerPage));
+            request.setAttribute(Parameters.TOURS_MAP, tourService.getToursMapLimit((selectedPage - 1) * quantityPerPage, quantityPerPage));
             request.setAttribute(Parameters.PAGINATION_MENU, new Pagination().getPaginationMenu(selectedPage, quantityPerPage));
 
         } catch (Exception e) {

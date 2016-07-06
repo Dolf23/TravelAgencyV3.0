@@ -9,12 +9,17 @@ import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.ActionService;
+import by.it_academy.agency.services.interfaces.IActionService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class CancelReservationCommand extends AbstractCommand {
+
+    @Autowired
+    private IActionService actionService;
+
     @Override
     public String execute(HttpServletRequest request) {
         String page;
@@ -26,7 +31,6 @@ public class CancelReservationCommand extends AbstractCommand {
                 User user = (User) session.getAttribute(Parameters.USER);
 
                 int idTour = Integer.parseInt(idTourString);
-                ActionService actionService = new ActionService();
                 actionService.deleteAction(user, idTour);
 
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.USER_PAGE_PATH);

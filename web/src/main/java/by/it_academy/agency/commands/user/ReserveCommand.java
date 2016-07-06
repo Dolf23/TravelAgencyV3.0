@@ -11,14 +11,23 @@ import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.ActionService;
-import by.it_academy.agency.services.ActionTypeService;
-import by.it_academy.agency.services.TourService;
+import by.it_academy.agency.services.interfaces.IActionService;
+import by.it_academy.agency.services.interfaces.IActionTypeService;
+import by.it_academy.agency.services.interfaces.ITourService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ReserveCommand extends AbstractCommand {
+
+    @Autowired
+    private ITourService tourService;
+    @Autowired
+    private IActionTypeService actionTypeService;
+    @Autowired
+    private IActionService actionService;
+
     @Override
     public String execute(HttpServletRequest request) {
         String page;
@@ -27,7 +36,6 @@ public class ReserveCommand extends AbstractCommand {
 
             if (null != idTourString) {
                 int idTour = Integer.parseInt(idTourString);
-                TourService tourService = new TourService();
                 Tour tour = tourService.getById(idTour);
 
                 HttpSession session = request.getSession();
@@ -57,8 +65,7 @@ public class ReserveCommand extends AbstractCommand {
 
         action.setTour(tour);
         action.setUser(user);
-        ActionTypeService actionTypeService = new ActionTypeService();
         action.setActionType(actionTypeService.getEntityByActionType(actionType));
-        new ActionService().add(action);
+        actionService.add(action);
     }
 }

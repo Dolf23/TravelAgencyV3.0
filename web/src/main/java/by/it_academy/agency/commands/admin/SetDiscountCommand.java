@@ -8,13 +8,17 @@ import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.TourService;
+import by.it_academy.agency.services.interfaces.ITourService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class SetDiscountCommand extends AbstractCommand {
     private static String idTourString = "";
     private static String amountDiscountString = "";
+
+    @Autowired
+    private ITourService tourService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -25,7 +29,6 @@ public class SetDiscountCommand extends AbstractCommand {
             if (isFieldsFull()) {
                 int idTour = Integer.parseInt(idTourString);
                 int amountDiscount = Integer.parseInt(amountDiscountString);
-                TourService tourService = new TourService();
                 tourService.makeDiscount(idTour, amountDiscount);
 
                 page = ConfigurationManager.INSTANCE.getProperty(ConfigsConstants.ADMIN_PAGE_PATH);
