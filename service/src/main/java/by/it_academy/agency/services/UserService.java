@@ -1,29 +1,35 @@
 package by.it_academy.agency.services;
 
 import by.it_academy.agency.beans.User;
-import by.it_academy.agency.dao.UserDAO;
+import by.it_academy.agency.dao.interfaces.IUserDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
-import by.it_academy.agency.utils.HibernateUtil;
-import org.hibernate.Session;
+import by.it_academy.agency.services.interfaces.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class UserService implements IService<User> {
-    private UserDAO userDAO = new UserDAO();
+@Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DAOException.class)
+public class UserService implements IUserService {
+
+    private IUserDAO dao;
+
+    @Autowired
+    public UserService(IUserDAO dao) {
+        this.dao = dao;
+    }
 
     @Override
     public void add(User user) throws ServiceException {
-        Session session = null;
         try {
-            session = HibernateUtil.getSession();
-            session.beginTransaction();
-            userDAO.createEntity(user);
-            session.getTransaction().commit();
+            dao.createEntity(user);
         } catch (DAOException e) {
             logger.writeLog("UserService add error:" + e.getMessage());
-            session.getTransaction().rollback();
             throw new ServiceException(e.getMessage());
         }
     }
@@ -36,7 +42,7 @@ public class UserService implements IService<User> {
     @Override
     public User getById(int id) throws ServiceException {
         try {
-            return userDAO.getEntityByID(id);
+            return dao.getEntityByID(id);
         } catch (DAOException e) {
             logger.writeLog("UserService getById error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
@@ -46,18 +52,18 @@ public class UserService implements IService<User> {
     @Override
     public List<User> getAll() throws ServiceException {
         try {
-            return userDAO.getAll();
+            return dao.getAll();
         } catch (DAOException e) {
             logger.writeLog("UserService getAll error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
         }
     }
 
-    public static boolean isAuthorized(String login, String password) throws ServiceException {
+    @Override
+    public boolean isAuthorized(String login, String password) throws ServiceException {
         try {
             boolean isLogIn = false;
-            UserDAO userDAO = new UserDAO();
-            User user = userDAO.getUserByLoginAndPassword(login, password);
+            User user = dao.getUserByLoginAndPassword(login, password);
             if (user != null)
                 isLogIn = true;
             return isLogIn;
@@ -67,10 +73,10 @@ public class UserService implements IService<User> {
         }
     }
 
-    public static String checkRole(String login) throws ServiceException {
+    @Override
+    public String checkRole(String login) throws ServiceException {
         try {
-            UserDAO userDAO = new UserDAO();
-            User user = userDAO.getUserByLogin(login);
+            User user = dao.getUserByLogin(login);
             String roleString = user.getRole().getRole();
             return roleString;
         } catch (DAOException e) {
@@ -79,21 +85,21 @@ public class UserService implements IService<User> {
         }
     }
 
-    public static User getUserByLogin(String login) throws ServiceException {
-        UserDAO userDAO = new UserDAO();
+    @Override
+    public User getUserByLogin(String login) throws ServiceException {
         try {
-            return userDAO.getUserByLogin(login);
+            return dao.getUserByLogin(login);
         } catch (DAOException e) {
             logger.writeLog("UserService getUserByLogin error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
         }
     }
 
-    public static boolean isNewUser(String login) throws ServiceException {
+    @Override
+    public boolean isNewUser(String login) throws ServiceException {
         try {
             boolean isNew = true;
-            UserDAO userDAO = new UserDAO();
-            User user = userDAO.getUserByLogin(login);
+            User user = dao.getUserByLogin(login);
             if (user != null)
                 isNew = false;
             return isNew;

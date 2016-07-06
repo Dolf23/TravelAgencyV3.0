@@ -1,15 +1,28 @@
 package by.it_academy.agency.services;
 
 import by.it_academy.agency.beans.ActionType;
-import by.it_academy.agency.dao.ActionTypeDAO;
+import by.it_academy.agency.dao.interfaces.IActionTypeDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
+import by.it_academy.agency.services.interfaces.IActionTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class ActionTypeService implements IService<ActionType> {
-    private ActionTypeDAO actionTypeDAO = new ActionTypeDAO();
+@Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DAOException.class)
+public class ActionTypeService implements IActionTypeService {
+
+    private IActionTypeDAO dao;
+
+    @Autowired
+    public ActionTypeService(IActionTypeDAO dao) {
+        this.dao = dao;
+    }
 
     @Override
     public void add(ActionType actionType) {
@@ -24,7 +37,7 @@ public class ActionTypeService implements IService<ActionType> {
     @Override
     public ActionType getById(int id) throws ServiceException {
         try {
-            return actionTypeDAO.getEntityByID(id);
+            return dao.getEntityByID(id);
         } catch (DAOException e) {
             logger.writeLog("Get entity bu id error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
@@ -34,16 +47,17 @@ public class ActionTypeService implements IService<ActionType> {
     @Override
     public List<ActionType> getAll() throws ServiceException {
         try {
-            return actionTypeDAO.getAll();
+            return dao.getAll();
         } catch (DAOException e) {
             logger.writeLog("Get all error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
         }
     }
 
+    @Override
     public ActionType getEntityByActionType(String actionType) throws ServiceException {
         try {
-            return actionTypeDAO.getEntityByActionType(actionType);
+            return dao.getEntityByActionType(actionType);
         } catch (DAOException e) {
             logger.writeLog("Get entity by action type error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
