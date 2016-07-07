@@ -14,7 +14,7 @@ public class ActionTypeServiceTest extends TestCase {
     @Before
     public void startTest() {
         MockitoAnnotations.initMocks(this);
-        actionTypeService = new ActionTypeService();
+
     }
 
     @Test

@@ -36,15 +36,6 @@
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
-    <filter>
-        <filter-name>Session</filter-name>
-        <filter-class>by.it_academy.agency.filters.SessionFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>Session</filter-name>
-        <servlet-name>Controller</servlet-name>
-    </filter-mapping>
-
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

@@ -23,8 +23,8 @@
 
     <tx:annotation-driven transaction-manager="serviceTransactionManager"/>
 
-    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-        <property name="transactionManager" ref="serviceTransactionManager"/>
-    </bean>
+    <!--<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">-->
+    <!--<property name="transactionManager" ref="serviceTransactionManager"/>-->
+    <!--</bean>-->
 
 </beans>

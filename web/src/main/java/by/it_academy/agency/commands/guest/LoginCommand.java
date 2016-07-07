@@ -9,8 +9,7 @@ import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.UserService;
-import by.it_academy.agency.services.interfaces.*;
+import by.it_academy.agency.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;

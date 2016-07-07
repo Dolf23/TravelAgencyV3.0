@@ -25,25 +25,32 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource">
-        <property name="packagesToScan">
+        <property name="mappingResources">
             <list>
-                <value>by.it_academy.agency.beans</value>
+                <value>Action.hbm.xml</value>
+                <value>ActionType.hbm.xml</value>
+                <value>Country.hbm.xml</value>
+                <value>FoodComplex.hbm.xml</value>
+                <value>HotelType.hbm.xml</value>
+                <value>Role.hbm.xml</value>
+                <value>Tour.hbm.xml</value>
+                <value>TourType.hbm.xml</value>
+                <value>Transport.hbm.xml</value>
+                <value>User.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="debug">true</prop>
+                <!--<prop key="debug">true</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="connection.isolation">2</prop>
-                <prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
-                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
-                <prop key="hibernate.cache.region.factory_class">
-                    org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-                </prop>
-                <prop key="hibernate.cache.use_second_level_cache">true</prop>
-                <prop key="cache.use_query_cache">true</prop>
+                <!--<prop key="connection.isolation">2</prop>-->
+                <!--<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>-->
+                <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
+                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>-->
+                <!--<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+                <!--<prop key="cache.use_query_cache">true</prop>-->
             </props>
         </property>
     </bean>

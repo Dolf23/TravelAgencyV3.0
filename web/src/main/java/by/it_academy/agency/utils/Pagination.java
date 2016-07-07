@@ -3,16 +3,19 @@ package by.it_academy.agency.utils;
 import by.it_academy.agency.constants.DefaultValue;
 import by.it_academy.agency.exceptions.PaginationException;
 import by.it_academy.agency.logger.logger;
-import by.it_academy.agency.services.TourService;
+import by.it_academy.agency.services.interfaces.ITourService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pagination {
 
+    @Autowired
+    private ITourService tourService;
+
     public List<String> getPaginationMenu(int selectPage, int quantityPerPage) throws PaginationException {
         try {
-            TourService tourService = new TourService();
             int countTours = tourService.getCountTours();
             List<String> list = new ArrayList<>();
 
