@@ -68,4 +68,16 @@ public class CountryService implements ICountryService {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public int getIdCountry(String country) throws ServiceException {
+        Country countryObj = getEntityByCountry(country);
+        int id;
+        if (countryObj == null) {
+            countryObj = new Country();
+            countryObj.setCountry(country);
+            add(countryObj);
+        }
+        id = getEntityByCountry(country).getId();
+        return id;
+    }
 }

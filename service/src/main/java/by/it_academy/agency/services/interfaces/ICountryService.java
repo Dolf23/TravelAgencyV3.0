@@ -5,4 +5,6 @@ import by.it_academy.agency.exceptions.ServiceException;
 
 public interface ICountryService extends IService<Country> {
     Country getEntityByCountry(String country) throws ServiceException;
+
+    int getIdCountry(String country) throws ServiceException;
 }
