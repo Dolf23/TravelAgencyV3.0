@@ -1,8 +1,10 @@
 package by.it_academy.agency.services;
 
 import by.it_academy.agency.beans.Action;
+import by.it_academy.agency.beans.Tour;
 import by.it_academy.agency.beans.User;
 import by.it_academy.agency.dao.interfaces.IActionDAO;
+import by.it_academy.agency.dao.interfaces.IActionTypeDAO;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
@@ -25,6 +27,8 @@ public class ActionService implements IActionService {
 
     @Autowired
     private ITourService tourService;
+    @Autowired
+    private IActionTypeDAO actionTypeDAO;
 
     @Autowired
     public ActionService(IActionDAO dao) {
@@ -89,6 +93,20 @@ public class ActionService implements IActionService {
             dao.delete(action);
         } catch (DAOException e) {
             logger.writeLog("ActionService deleteActions error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void reserveTour(Tour tour, User user, String actionType) throws ServiceException {
+        try {
+            Action action = new Action();
+            action.setTour(tour);
+            action.setUser(user);
+            action.setActionType(actionTypeDAO.getEntityByActionType(actionType));
+            add(action);
+        } catch (DAOException e) {
+            logger.writeLog("ActionService reserveTour error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
         }
     }
