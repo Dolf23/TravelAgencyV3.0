@@ -151,6 +151,7 @@ public class TourService implements ITourService {
         }
     }
 
+    @Override
     public void createTour(int fk_country, int fk_tour_type, int fk_transport, int fk_hotel_type, int fk_food_complex, int cost) throws ServiceException {
         try {
             Tour tour = new Tour();
