@@ -1,7 +1,7 @@
 package by.it_academy.agency.services;
 
 import by.it_academy.agency.beans.Tour;
-import by.it_academy.agency.dao.interfaces.ITourDAO;
+import by.it_academy.agency.dao.interfaces.*;
 import by.it_academy.agency.exceptions.DAOException;
 import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
@@ -20,6 +20,17 @@ import java.util.Map;
 public class TourService implements ITourService {
 
     private ITourDAO dao;
+
+    @Autowired
+    private ICountryDAO countryDAO;
+    @Autowired
+    private ITourTypeDAO tourTypeDAO;
+    @Autowired
+    private ITransportDAO transportDAO;
+    @Autowired
+    private IHotelTypeDAO hotelTypeDAO;
+    @Autowired
+    private IFoodComplexDAO foodComplexDAO;
 
     @Autowired
     public TourService(ITourDAO dao) {
@@ -136,6 +147,23 @@ public class TourService implements ITourService {
             return dao.getCountTours();
         } catch (DAOException e) {
             logger.writeLog("TourService getCountTours error:" + e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public void createTour(int fk_country, int fk_tour_type, int fk_transport, int fk_hotel_type, int fk_food_complex, int cost) throws ServiceException {
+        try {
+            Tour tour = new Tour();
+            tour.setCountry(countryDAO.getEntityByID(fk_country));
+            tour.setTourType(tourTypeDAO.getEntityByID(fk_tour_type));
+            tour.setTransport(transportDAO.getEntityByID(fk_transport));
+            tour.setHotelType(hotelTypeDAO.getEntityByID(fk_hotel_type));
+            tour.setFoodComplex(foodComplexDAO.getEntityByID(fk_food_complex));
+            tour.setCost(cost);
+            tour.setDiscount(0);
+            add(tour);
+        } catch (DAOException e) {
+            logger.writeLog("TourService createTour error:" + e.getMessage());
             throw new ServiceException(e.getMessage());
         }
     }
