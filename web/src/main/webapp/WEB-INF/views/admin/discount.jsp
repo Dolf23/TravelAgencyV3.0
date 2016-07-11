@@ -1,9 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="top.jsp" %>
 
-<form class="form-horizontal" action="controller" method="post">
-    <input type="hidden" name="command" value="set_discount">
+<form class="form-horizontal" action="/admin/make_discount" method="post">
     <fieldset>
 
         <!-- Select Multiple -->
@@ -50,5 +48,3 @@
 
     </fieldset>
 </form>
-
-<%@ include file="bottom.jsp" %>

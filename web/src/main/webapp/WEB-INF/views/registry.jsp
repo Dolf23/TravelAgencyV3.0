@@ -1,14 +1,4 @@
-<%@ page language="java" pageEncoding="UTF-8" %>
-<html>
-<head>
-    <title>Login</title>
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<form class="form-horizontal" method="POST" action="controller" style="margin-top: 15px">
-    <input type="hidden" name="command" value="registration">
+<form class="form-horizontal" method="POST" action="/registration" style="margin-top: 15px">
     <fieldset>
 
         <!-- Text input-->
@@ -82,7 +72,7 @@
 
             <div class="col-md-4">
                 <button id="buttonRegistry" name="buttonRegistry" class="btn btn-success">Registry</button>
-                <a href="controller?command=back" style="margin-left: 25px;">Back</a>
+                <a href="/home" style="margin-left: 25px;">Back</a>
             </div>
         </div>
 
@@ -94,5 +84,3 @@
 
     </fieldset>
 </form>
-</body>
-</html>

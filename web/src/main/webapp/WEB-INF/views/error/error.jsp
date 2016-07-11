@@ -1,5 +1,4 @@
-<%@ page isErrorPage="true" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page isErrorPage="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>Error!</title>
@@ -9,7 +8,7 @@
     <h2>
         Sorry, but at the moment the service is not available:<br/>
         ${errorDatabase} <br/>
-        <a href="controller?command=logout">Back</a>
+        <a href="/home">Back</a>
     </h2>
 </div>
 </body>

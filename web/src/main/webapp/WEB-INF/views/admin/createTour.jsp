@@ -1,9 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="top.jsp" %>
 
-<form class="form-horizontal" action="controller" method="post">
-    <input type="hidden" name="command" value="create_tour">
+<form class="form-horizontal" action="/admin/create_tour" method="post">
     <fieldset>
 
         <!-- Text input-->
@@ -98,5 +96,3 @@
 
     </fieldset>
 </form>
-
-<%@ include file="bottom.jsp" %>
