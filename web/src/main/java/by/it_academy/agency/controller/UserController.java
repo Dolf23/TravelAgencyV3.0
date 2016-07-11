@@ -1,6 +1,7 @@
 package by.it_academy.agency.controller;
 
 import by.it_academy.agency.beans.Tour;
+import by.it_academy.agency.beans.TourType;
 import by.it_academy.agency.beans.User;
 import by.it_academy.agency.constants.MessageConstants;
 import by.it_academy.agency.constants.PagePathConstants;
@@ -9,8 +10,7 @@ import by.it_academy.agency.exceptions.ServiceException;
 import by.it_academy.agency.logger.logger;
 import by.it_academy.agency.managers.ConfigurationManager;
 import by.it_academy.agency.managers.MessageManager;
-import by.it_academy.agency.services.interfaces.IActionService;
-import by.it_academy.agency.services.interfaces.ITourService;
+import by.it_academy.agency.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,6 +29,16 @@ public class UserController {
     private IActionService actionService;
     @Autowired
     private ITourService tourService;
+    @Autowired
+    private ICountryService countryService;
+    @Autowired
+    private ITourTypeService tourTypeService;
+    @Autowired
+    private ITransportService transportService;
+    @Autowired
+    private IHotelTypeService hotelTypeService;
+    @Autowired
+    private IFoodComplexService foodComplexService;
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String goToMain() {
@@ -47,6 +58,31 @@ public class UserController {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(PagePathConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    public String goToSelectTour(HttpServletRequest request) {
+        String page = ConfigurationManager.INSTANCE.getProperty(PagePathConstants.USER_SELECT_TOUR_PAGE_PATH);
+
+        try {
+            List<TourType> typeTourList = tourTypeService.getAll();
+            request.setAttribute(Parameters.TOUR_TYPE_LIST, typeTourList);
+
+            List<by.it_academy.agency.beans.Country> countryList = countryService.getAll();
+            request.setAttribute(Parameters.COUNTRY_LIST, countryList);
+
+            List<by.it_academy.agency.beans.Transport> transportList = transportService.getAll();
+            request.setAttribute(Parameters.TRANSPORT_LIST, transportList);
+
+            List<by.it_academy.agency.beans.HotelType> hotelList = hotelTypeService.getAll();
+            request.setAttribute(Parameters.HOTEL_TYPE_LIST, hotelList);
+
+            List<by.it_academy.agency.beans.FoodComplex> foodComplexList = foodComplexService.getAll();
+            request.setAttribute(Parameters.FOOD_COMPLEX_LIST, foodComplexList);
+        } catch (ServiceException e) {
+            logger.writeLog(e.getMessage());
         }
         return page;
     }

@@ -35,13 +35,15 @@ public class AdminController {
     private IHotelTypeService hotelTypeService;
     @Autowired
     private IFoodComplexService foodComplexService;
+    @Autowired
+    private Pagination pagination;
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String goToMainAdmin() {
         return ConfigurationManager.INSTANCE.getProperty(PagePathConstants.ADMIN_PAGE_PATH);
     }
 
-    @RequestMapping(value = "/createTour", method = RequestMethod.POST)
+    @RequestMapping(value = "/create_tour", method = RequestMethod.POST)
     public String createTour(HttpServletRequest request) {
         String page;
 
@@ -72,36 +74,36 @@ public class AdminController {
         return page;
     }
 
-    @RequestMapping(value = "/createTour", method = RequestMethod.GET)
+    @RequestMapping(value = "/create_tour", method = RequestMethod.GET)
     public String goToCreateTour(HttpServletRequest request) {
         String page = ConfigurationManager.INSTANCE.getProperty(PagePathConstants.ADMIN_CREATE_TOUR_PAGE_PATH);
 
         try {
             List<TourType> typeTourList = tourTypeService.getAll();
-            request.setAttribute(Parameters.TOUR_TYPE_LIST, typeTourList);
+            request.getSession().setAttribute(Parameters.TOUR_TYPE_LIST, typeTourList);
 
             List<by.it_academy.agency.beans.Transport> transportList = transportService.getAll();
-            request.setAttribute(Parameters.TRANSPORT_LIST, transportList);
+            request.getSession().setAttribute(Parameters.TRANSPORT_LIST, transportList);
 
             List<by.it_academy.agency.beans.HotelType> hotelList = hotelTypeService.getAll();
-            request.setAttribute(Parameters.HOTEL_TYPE_LIST, hotelList);
+            request.getSession().setAttribute(Parameters.HOTEL_TYPE_LIST, hotelList);
 
             List<by.it_academy.agency.beans.FoodComplex> foodComplexList = foodComplexService.getAll();
-            request.setAttribute(Parameters.FOOD_COMPLEX_LIST, foodComplexList);
+            request.getSession().setAttribute(Parameters.FOOD_COMPLEX_LIST, foodComplexList);
         } catch (ServiceException e) {
             logger.writeLog(e.getMessage());
         }
         return page;
     }
 
-    @RequestMapping(value = "/discount", method = RequestMethod.GET)
+    @RequestMapping(value = "/make_discount", method = RequestMethod.GET)
     public String goToSetDiscount(HttpServletRequest request) {
         String page;
         try {
             page = ConfigurationManager.INSTANCE.getProperty(PagePathConstants.ADMIN_SET_DISCOUNT_PAGE_PATH);
             request.getSession().setAttribute(Parameters.COUNT_TOURS_PER_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE);
             request.setAttribute(Parameters.TOURS_MAP, tourService.getToursMapLimit(DefaultValue.START_RECORD, DefaultValue.COUNT_RECORDS_PER_PAGE));
-            request.setAttribute(Parameters.PAGINATION_MENU, new Pagination().getPaginationMenu(DefaultValue.START_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE));
+            request.setAttribute(Parameters.PAGINATION_MENU, pagination.getPaginationMenu(DefaultValue.START_PAGE, DefaultValue.COUNT_RECORDS_PER_PAGE));
         } catch (Exception e) {
             logger.writeLog(e.getMessage());
             page = ConfigurationManager.INSTANCE.getProperty(PagePathConstants.ERROR_PAGE_PATH);
