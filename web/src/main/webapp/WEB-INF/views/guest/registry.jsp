@@ -1,7 +1,5 @@
-<form class="form-horizontal" method="POST" action="/registration" style="margin-top: 15px">
+<form class="form-horizontal" method="POST" action="registration" style="margin-top: 15px">
     <fieldset>
-
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Name</label>
 
@@ -10,8 +8,6 @@
                 <span class="help-block">Enter name</span>
             </div>
         </div>
-
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="surname">Surname</label>
 
@@ -20,8 +16,6 @@
                 <span class="help-block">Enter surname</span>
             </div>
         </div>
-
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="email">E-mail</label>
 
@@ -30,8 +24,6 @@
                 <span class="help-block">Enter e-mail</span>
             </div>
         </div>
-
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="login">Login</label>
 
@@ -40,8 +32,6 @@
                 <span class="help-block">Enter login</span>
             </div>
         </div>
-
-        <!-- Password input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="password">Password</label>
 
@@ -50,8 +40,6 @@
                 <span class="help-block">Enter password</span>
             </div>
         </div>
-
-        <!-- Multiple Checkboxes -->
         <div class="form-group">
             <label class="col-md-4 control-label"></label>
 
@@ -64,18 +52,14 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="buttonRegistry"></label>
 
             <div class="col-md-4">
                 <button id="buttonRegistry" name="buttonRegistry" class="btn btn-success">Registry</button>
-                <a href="/home" style="margin-left: 25px;">Back</a>
+                <a href="home" style="margin-left: 25px;">Back</a>
             </div>
         </div>
-
         <div align="center">
             <h3>${operationMessage}<br></h3>
 

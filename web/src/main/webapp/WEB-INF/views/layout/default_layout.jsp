@@ -1,18 +1,11 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <!DOCTYPE html>
-<html xmlns:jsp="http://java.sun.com/JSP/Page"
-      xmlns:tiles="http://tiles.apache.org/tags-tiles">
-
-<jsp:output doctype-public="-//W3C//DTD XHTML 1.1//EN"
-            doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
-            doctype-root-element="html"
-            omit-xml-declaration="false"
-        />
+<html xmlns:jsp="http://java.sun.com/JSP/Page">
 <head>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="assets/js/bootstrap.min.js"></script>
-
-    <title>Travel Agency></title>
+    <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+    <title>Travel Agency</title>
 </head>
 
 <body>

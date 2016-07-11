@@ -16,7 +16,7 @@
                     <li><a href="/user/reserve">Reserved tours</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="controller?command=logout">Sign-out</a></li>
+                    <li><a href="/logout">Sign-out</a></li>
                 </ul>
             </div>
         </div>
