@@ -11,21 +11,21 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <!--<mvc:resources mapping="/assets/**" location="/assets/"/>-->
-    <!--<mvc:annotation-driven/>-->
+    <mvc:resources mapping="/bootstrap/**" location="/bootstrap/"/>
+    <mvc:annotation-driven/>
 
     <import resource="classpath*:dao-context.xml"/>
     <import resource="classpath*:service-context.xml"/>
 
-    <context:component-scan base-package="by.it_academy.agency.commands"/>
+    <context:component-scan base-package="by.it_academy.agency.controller"/>
 
 
-    <!--<bean id="tilesConfigurer"-->
-    <!--class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"-->
-    <!--p:definitions="/WEB-INF/tiles.xml" />-->
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+          p:definitions="/WEB-INF/tiles.xml"/>
 
-    <!--<bean id="tilesViewResolver"-->
-    <!--class="org.springframework.web.servlet.view.UrlBasedViewResolver"-->
-    <!--p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />-->
+    <bean id="tilesViewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"/>
 
 </beans>
