@@ -6,10 +6,10 @@
 
     <!-- USER'S PAGES TEMPLATE -->
     <definition name="default" template="/WEB-INF/views/layout/default_layout.jsp">
-        <put-attribute name="header"/>
-        <put-attribute name="sidebar"/>
-        <put-attribute name="body"/>
-        <put-attribute name="footer"/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="sidebar" value=""/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value=""/>
     </definition>
 
     <!-- ADMIN PAGES -->
@@ -19,7 +19,6 @@
     </definition>
 
     <definition name="admin/main" extends="admin_default">
-        <!--<put-attribute name="title" value="page.common.main.title"/>&lt;!&ndash;прописывается в messages.properties&ndash;&gt;-->
         <put-attribute name="body" value="/WEB-INF/views/admin/main.jsp"/>
     </definition>
 
@@ -54,13 +53,18 @@
     </definition>
 
     <!-- ERROR PAGE -->
-    <definition name="error/error" extends="default">
+    <definition name="error" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/error/error.jsp"/>
     </definition>
 
     <!-- REGISTRATION PAGE -->
     <definition name="registration" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/registry.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/guest/registry.jsp"/>
+    </definition>
+
+    <!-- HOME PAGE -->
+    <definition name="home" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/guest/login.jsp"/>
     </definition>
 
 </tiles-definitions>
