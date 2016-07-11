@@ -1,6 +1,6 @@
 package by.it_academy.agency.constants;
 
-public class ConfigsConstants {
+public class PagePathConstants {
     public static final String CONFIG_SOURCE = "configs";
     public static final String MESSAGES_SOURCE = "messages";
 
